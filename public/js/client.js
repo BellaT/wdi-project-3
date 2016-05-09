@@ -2,7 +2,6 @@ var TrailApp = TrailApp || {}
 
 TrailApp.setRequestHeader = function(xhr, settings) {
   var token = TrailApp.getToken();
-
   if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
 }
 
@@ -53,7 +52,8 @@ TrailApp.setupGoogleMaps = function(){
   var mapOptions = {
     zoom: 5,
     center: new google.maps.LatLng(51.5074, 0.1278),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    styles: [[{"featureType":"landscape","stylers":[{"hue":"#FFA800"},{"saturation":0},{"lightness":0},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#53FF00"},{"saturation":-73},{"lightness":40},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FBFF00"},{"saturation":0},{"lightness":0},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#00FFFD"},{"saturation":0},{"lightness":30},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#00BFFF"},{"saturation":6},{"lightness":8},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#679714"},{"saturation":33.4},{"lightness":-25.4},{"gamma":1}]}]]
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
@@ -63,6 +63,31 @@ TrailApp.initialize = function(){
   $('form').on('submit', this.submitForm);
   $('#getUsers').on('click', this.getUsers);
   this.setupGoogleMaps();
+  this.trailRequest();
+  // this.ajaxRequest("GET", "https://trailapi-trailapi.p.mashape.com/?lat=34.1&limit=25&lon=-105.2&q[activities_activity_name_cont]=Yellow+River+Trail&q[activities_activity_type_name_eq]=hiking&q[city_cont]=Denver&q[country_cont]=Australia")
+  // var trails  = unirest.get("https://trailapi-trailapi.p.mashape.com/?lat=34.1&limit=25&lon=-105.2&q[activities_activity_name_cont]=Yellow+River+Trail&q[activities_activity_type_name_eq]=hiking&q[city_cont]=Denver&q[country_cont]=Australia")
+  // .header("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP")
+  // .header("Accept", "text/plain")
+//   .end(function (result) {
+//     console.log(result.status, result.headers, result.body);
+  // });
+}
+
+TrailApp.trailRequest = function() {
+  $.ajax({
+    method: "GET",
+    url: "https://trailapi-trailapi.p.mashape.com/?q[country_cont]=Australia",
+    beforeSend: this.setTrailHeader
+  }).done(function(data) {
+    console.log(data);
+  }).fail(function(data) {
+    console.log(data.responseJSON.message);
+  })
+}
+
+TrailApp.setTrailHeader = function(xhr, settings) {
+  return xhr.setRequestHeader("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP");
+
 }
 
 $(function(){
