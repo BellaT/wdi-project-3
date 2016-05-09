@@ -76,7 +76,7 @@ TrailApp.setTrailHeader = function(xhr, settings) {
 }
 
 TrailApp.getTemplate = function(tpl, data) {
-  var templateUrl = "http://localhost:3000/public/templates/" + tpl + ".html";
+  var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
 
   $.ajax({
     url: templateUrl,
@@ -102,12 +102,11 @@ TrailApp.setupNavigation = function() {
 TrailApp.initialize = function(){
   // $('form').on('submit', this.submitForm);
   // $('#getUsers').on('click', this.getUsers);
-  // this.setupGoogleMaps();
+  this.setupGoogleMaps();
   // this.trailRequest();
   this.setupNavigation();
 }
 
 $(function(){
-  console.log("here")
   TrailApp.initialize();
 })

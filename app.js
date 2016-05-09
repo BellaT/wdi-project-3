@@ -47,11 +47,9 @@ app.use(function (err, req, res, next) {
 
 app.use("/api", routes);
 
-app.get('*', function(req, res){
+app.get('/', function(req, res){
   res.sendFile(__dirname + "/public/index.html");
 })
-
-
 
 app.listen(config.port, function(){
   console.log("Express is alive and kicking on port: ", config.port);
