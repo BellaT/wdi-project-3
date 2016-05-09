@@ -47,9 +47,22 @@ TrailApp.getUsers = function() {
   return TrailApp.ajaxRequest("get", "/users");
 }
 
+TrailApp.setupGoogleMaps = function(){
+  this.canvas = document.getElementById('map-canvas');
+
+  var mapOptions = {
+    zoom: 5,
+    center: new google.maps.LatLng(51.5074, 0.1278),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+
+  this.map = new google.maps.Map(this.canvas, mapOptions);
+}
+
 TrailApp.initialize = function(){
   $('form').on('submit', this.submitForm);
   $('#getUsers').on('click', this.getUsers);
+  this.setupGoogleMaps();
 }
 
 $(function(){
