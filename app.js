@@ -47,7 +47,7 @@ app.use(function (err, req, res, next) {
 
 app.use("/api", routes);
 
-app.get('/', function(req, res){
+app.get('*', function(req, res){
   res.sendFile(__dirname + "/public/index.html");
 })
 
