@@ -1,0 +1,28 @@
+{
+  "name": "world-trails",
+  "version": "1.0.0",
+  "description": "WDI Group Project John Segar Bella Taylor - Master of ALL Peter",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BellaT/wdi-project-3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BellaT/wdi-project-3/issues"
+  },
+  "homepage": "https://github.com/BellaT/wdi-project-3#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.15",
+    "morgan": "^1.7.0",
+    "validator": "^5.2.0"
+  }
+}
