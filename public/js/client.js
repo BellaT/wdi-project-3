@@ -26,7 +26,7 @@ TrailApp.ajaxRequest = function(method, url, data) {
     beforeSend: this.setRequestHeader
   }).done(function(data) {
     console.log(data);
-    TrailApp.saveTokenIfPresent(data)
+    TrailApp.saveTokenIfPresent(data);
   }).fail(function(data) {
     console.log(data.responseJSON.message);
   });
@@ -59,20 +59,6 @@ TrailApp.setupGoogleMaps = function(){
   this.map = new google.maps.Map(this.canvas, mapOptions);
 }
 
-TrailApp.initialize = function(){
-  $('form').on('submit', this.submitForm);
-  $('#getUsers').on('click', this.getUsers);
-  this.setupGoogleMaps();
-  this.trailRequest();
-  // this.ajaxRequest("GET", "https://trailapi-trailapi.p.mashape.com/?lat=34.1&limit=25&lon=-105.2&q[activities_activity_name_cont]=Yellow+River+Trail&q[activities_activity_type_name_eq]=hiking&q[city_cont]=Denver&q[country_cont]=Australia")
-  // var trails  = unirest.get("https://trailapi-trailapi.p.mashape.com/?lat=34.1&limit=25&lon=-105.2&q[activities_activity_name_cont]=Yellow+River+Trail&q[activities_activity_type_name_eq]=hiking&q[city_cont]=Denver&q[country_cont]=Australia")
-  // .header("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP")
-  // .header("Accept", "text/plain")
-//   .end(function (result) {
-//     console.log(result.status, result.headers, result.body);
-  // });
-}
-
 TrailApp.trailRequest = function() {
   $.ajax({
     method: "GET",
@@ -87,9 +73,41 @@ TrailApp.trailRequest = function() {
 
 TrailApp.setTrailHeader = function(xhr, settings) {
   return xhr.setRequestHeader("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP");
+}
 
+TrailApp.getTemplate = function(tpl, data) {
+  var templateUrl = "http://localhost:3000/public/templates/" + tpl + ".html";
+
+  $.ajax({
+    url: templateUrl,
+    method: "GET",
+    dataType: "html"
+  }).done(function(templateData){
+    var parsedTemplate = _.template(templateData);
+    var compliedTemplate = parsedTemplate(data);
+    $("main").empty().append(compliedTemplate);
+  });
+}
+
+TrailApp.changePage = function() {
+  event.preventDefault();
+  var tpl = $(this).data("template");
+  TrailApp.getTemplate(tpl, null);
+}
+
+TrailApp.setupNavigation = function() {
+  $("header nav a").on("click", this.changePage);
+}
+
+TrailApp.initialize = function(){
+  // $('form').on('submit', this.submitForm);
+  // $('#getUsers').on('click', this.getUsers);
+  // this.setupGoogleMaps();
+  // this.trailRequest();
+  this.setupNavigation();
 }
 
 $(function(){
+  console.log("here")
   TrailApp.initialize();
 })
