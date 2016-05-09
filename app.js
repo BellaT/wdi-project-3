@@ -8,14 +8,19 @@ var mongoose       = require("mongoose");
 var passport       = require("passport");
 var expressJWT     = require("express-jwt");
 var routes         = require("./config/routes"); 
+var cors           = require("cors");
 
 require("./config/passport")(passport);
 
 mongoose.connect(config.database);
 
+app.use(express.static(__dirname + '/public'));
+
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(cors());
 
 app.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === "object" && "_method" in req.body){
@@ -40,7 +45,14 @@ app.use(function (err, req, res, next) {
   next();
 });
 
+app.use("/api", routes);
 
-app.lsiten(config.port, function(){
+app.get('*', function(req, res){
+  res.sendFile(__dirname + "/public/index.html");
+})
+
+
+
+app.listen(config.port, function(){
   console.log("Express is alive and kicking on port: ", config.port);
 })
