@@ -1,0 +1,23 @@
+{
+  "name": "world-trails",
+  "description": "WDI Group Project John Segar Bella Taylor - Master of ALL Peter",
+  "main": "app.js",
+  "authors": [
+    "BellaT <bella_taylor@hotmail.co.uk>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/BellaT/wdi-project-3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3",
+    "underscore": "^1.8.3"
+  }
+}
