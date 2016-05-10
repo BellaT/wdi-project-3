@@ -215,7 +215,6 @@ Zombie.initialize = function(){
   this.setupNavigation();
   this.setupForm();
   this.autocomplete();
-
 }
 
 $(function(){
