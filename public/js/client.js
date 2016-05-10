@@ -137,9 +137,10 @@ Zombie.getLocation = function() {
         lng: res.results[0].geometry.location.lng
       }
 
-      Zombie.iconTypes.forEach(function(type) {
-        Zombie.getService(LatLng, [type]);
-      });
+      // Zombie.iconTypes.forEach(function(type) {
+      //   Zombie.getService(LatLng, type);
+      // });
+      Zombie.getService(LatLng, "hospital");
     }
   });
 }
@@ -150,7 +151,7 @@ Zombie.getService = function(LatLng, type) {
   service.nearbySearch({
     location: LatLng,
     radius: 50000,
-    type: type
+    type: [type]
   }, Zombie.processResults);
 }
 
@@ -166,9 +167,9 @@ Zombie.createMarkers = function(places) {
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0, place; place = places[i]; i++) {
-    
+    console.log(place.types[0])
     var image = {
-      url: place.icon,
+      url: "../zombie-project/" + place.types[0] + ".png",
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
