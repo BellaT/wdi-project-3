@@ -34,12 +34,14 @@ TrailApp.ajaxRequest = function(method, url, data) {
 
 TrailApp.submitForm = function() {
   event.preventDefault();
+  console.log("here")
 
   var method = $(this).attr('method');
   var url    = $(this).attr('action');
   var data   = $(this).serialize();
 
-  return TrailApp.ajaxRequest(method, url, data);
+  TrailApp.ajaxRequest(method, url, data);
+  return TrailApp.getTemplate("home", null);
 }
 
 TrailApp.getUsers = function() {
@@ -99,12 +101,16 @@ TrailApp.setupNavigation = function() {
   $("header nav a").on("click", this.changePage);
 }
 
+TrailApp.setupForm = function() {
+  $('form').on('submit', this.submitForm);
+}
+
 TrailApp.initialize = function(){
-  // $('form').on('submit', this.submitForm);
   // $('#getUsers').on('click', this.getUsers);
   this.setupGoogleMaps();
   // this.trailRequest();
   this.setupNavigation();
+  this.setupForm();
 }
 
 $(function(){
