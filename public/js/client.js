@@ -64,7 +64,9 @@ Zombie.setupGoogleMaps = function(){
     zoom: 3,
     center: new google.maps.LatLng(28.0339, 1.6596),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    // styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}]
+    styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}],
+    mapTypeControl: false,
+    minZoom: 2
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
@@ -370,7 +372,8 @@ Zombie.setupGoogleMaps = function(){
 
   var heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
-    dissipating: true
+    dissipating:true
+
   });
   heatmap.setMap(this.map);
   heatmap.set('radius', 10)
@@ -394,7 +397,7 @@ Zombie.getTemplate = function(tpl, data) {
 Zombie.changePage = function() {
   event.preventDefault();
   var tpl = $(this).data("template");
-  Zombie.getTemplate(tpl, null);
+  if (tpl) Zombie.getTemplate(tpl, null);
 }
 
 Zombie.setupNavigation = function() {
