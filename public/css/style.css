@@ -239,7 +239,7 @@ img {
 .hamburger.is-closed .hamb-top,
 .hamburger.is-closed .hamb-middle,
 .hamburger.is-closed .hamb-bottom {
-  background-color: rgb(84, 12, 4);
+  background-color: rgb(200,200,200);
 }
 .hamburger.is-closed .hamb-top { 
   top: 5px; 
@@ -265,7 +265,7 @@ img {
 .hamburger.is-open .hamb-top,
 .hamburger.is-open .hamb-middle,
 .hamburger.is-open .hamb-bottom {
-  background-color: rgb(84, 12, 4);
+  background-color: rgb(200,200,200);
 }
 .hamburger.is-open .hamb-top,
 .hamburger.is-open .hamb-bottom {
