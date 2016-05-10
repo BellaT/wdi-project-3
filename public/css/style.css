@@ -306,6 +306,7 @@ img {
   text-align: center;
   margin: 15px auto; 
   /*margin-top: 15px;*/
+  right: 0;
   background-color: black;
   color: rgb(200, 200, 200);
   opacity: 0.8;
