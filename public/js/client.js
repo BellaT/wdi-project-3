@@ -61,21 +61,21 @@ TrailApp.setupGoogleMaps = function(){
   this.map = new google.maps.Map(this.canvas, mapOptions);
 }
 
-TrailApp.trailRequest = function() {
-  $.ajax({
-    method: "GET",
-    url: "https://trailapi-trailapi.p.mashape.com/?q[country_cont]=Australia",
-    beforeSend: this.setTrailHeader
-  }).done(function(data) {
-    console.log(data);
-  }).fail(function(data) {
-    console.log(data.responseJSON.message);
-  })
-}
+// TrailApp.trailRequest = function() {
+//   $.ajax({
+//     method: "GET",
+//     url: "https://trailapi-trailapi.p.mashape.com/?q[country_cont]=Australia",
+//     beforeSend: this.setTrailHeader
+//   }).done(function(data) {
+//     console.log(data);
+//   }).fail(function(data) {
+//     console.log(data.responseJSON.message);
+//   })
+// }
 
-TrailApp.setTrailHeader = function(xhr, settings) {
-  return xhr.setRequestHeader("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP");
-}
+// TrailApp.setTrailHeader = function(xhr, settings) {
+//   return xhr.setRequestHeader("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP");
+// }
 
 TrailApp.getTemplate = function(tpl, data) {
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
