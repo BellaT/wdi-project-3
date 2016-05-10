@@ -19,7 +19,7 @@ Zombie.saveTokenIfPresent = function(data) {
 }
 
 Zombie.ajaxRequest = function(method, url, data) {
-  $.ajax({
+  return $.ajax({
     method: method,
     url: "http://localhost:3000/api" + url,
     data: data,
@@ -48,6 +48,15 @@ Zombie.getUsers = function() {
   return Zombie.ajaxRequest("get", "/users");
 }
 
+Zombie.iconTypes = [
+  "hospital",
+  "hardware_store",
+  "pharmacy",
+  "doctor",
+  "police",
+  "gas_station"
+]
+
 Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
@@ -55,10 +64,34 @@ Zombie.setupGoogleMaps = function(){
     zoom: 3,
     center: new google.maps.LatLng(28.0339, 1.6596),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}]
+    // styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}]
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
+
+
+  var heatmapData = [
+    new google.maps.LatLng(37.782, -122.447),
+    new google.maps.LatLng(37.782, -122.445),
+    new google.maps.LatLng(37.782, -122.443),
+    new google.maps.LatLng(37.782, -122.441),
+    new google.maps.LatLng(37.782, -122.439),
+    new google.maps.LatLng(37.782, -122.437),
+    new google.maps.LatLng(37.782, -122.435),
+    new google.maps.LatLng(37.785, -122.447),
+    new google.maps.LatLng(37.785, -122.445),
+    new google.maps.LatLng(37.785, -122.443),
+    new google.maps.LatLng(37.785, -122.441),
+    new google.maps.LatLng(37.785, -122.439),
+    new google.maps.LatLng(37.785, -122.437),
+    new google.maps.LatLng(37.785, -122.435)
+  ];
+
+  var heatmap = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData
+  });
+  heatmap.setMap(this.map);
+
   // this.getService({ lat: 51.5074, lng: 0.1278 }, "hospital");
   // this.getService({ lat: 51.5074, lng: 0.1278 }, "hardware_store");
 }
@@ -73,7 +106,7 @@ Zombie.getTemplate = function(tpl, data) {
   }).done(function(templateData){
     var parsedTemplate = _.template(templateData);
     var compliedTemplate = parsedTemplate(data);
-    $("main").empty().append(compliedTemplate);
+    $("main").html(compliedTemplate);
   });
 }
 
@@ -94,22 +127,26 @@ Zombie.setupForm = function() {
 Zombie.getLocation = function() {
   // event.preventDefault();
   var location = $("#pac-input").val();
-  console.log(location)
-  $.ajax({
+  
+  return $.ajax({
     url:"http://maps.googleapis.com/maps/api/geocode/json?address="+location+"&sensor=false",
     type: "POST",
     success:function(res){
-     var LatLng = { 
-      lat: res.results[0].geometry.location.lat,
-      lng: res.results[0].geometry.location.lng
+      var LatLng = { 
+        lat: res.results[0].geometry.location.lat,
+        lng: res.results[0].geometry.location.lng
+      }
+
+      Zombie.iconTypes.forEach(function(type) {
+        Zombie.getService(LatLng, [type]);
+      });
     }
-    Zombie.getService(LatLng, ["hospital"]);
-  }
-})
+  });
 }
 
 Zombie.getService = function(LatLng, type) {
   var service = new google.maps.places.PlacesService(Zombie.map);
+  
   service.nearbySearch({
     location: LatLng,
     radius: 50000,
@@ -129,7 +166,7 @@ Zombie.createMarkers = function(places) {
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0, place; place = places[i]; i++) {
-    console.log(place.icon)
+    
     var image = {
       url: place.icon,
       size: new google.maps.Size(71, 71),
@@ -152,62 +189,61 @@ Zombie.createMarkers = function(places) {
 
 Zombie.autocomplete = function() {
   var map = Zombie.map 
-    // Create the search box and link it to the UI element.
-    var input = document.getElementById('pac-input');
-    var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function() {
-      searchBox.setBounds(map.getBounds());
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  var markers = [];
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) return;
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
     });
 
-    var markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.addListener('places_changed', function() {
-      var places = searchBox.getPlaces();
+    markers = [];
 
-      if (places.length == 0) {
-        return;
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
       }
-
-      // Clear out the old markers.
-      markers.forEach(function(marker) {
-        marker.setMap(null);
-      });
-      markers = [];
-
-      // For each place, get the icon, name and location.
-      var bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
-        var icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
-        };
-
-        // Create a marker for each place.
-        markers.push(new google.maps.Marker({
-          map: map,
-          icon: icon,
-          title: place.name,
-          position: place.geometry.location
-        }));
-
-        if (place.geometry.viewport) {
-          // Only geocodes have viewport.
-          bounds.union(place.geometry.viewport);
-        } else {
-          bounds.extend(place.geometry.location);
-        }
-      });
-      // map.fitBounds(bounds);
-      Zombie.getLocation();
     });
-  }
+    // map.fitBounds(bounds);
+    Zombie.getLocation();
+  });
+}
 
 Zombie.initialize = function(){
   // $('#getUsers').on('click', this.getUsers);

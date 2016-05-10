@@ -7,16 +7,14 @@
   <script type="text/javascript" src="./vendor/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./vendor/underscore/underscore-min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places" charset="utf-8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places,visualization" charset="utf-8"></script>
   <script type="text/javascript" src="./js/client.js"></script> 
   <script type="text/javascript" src="./js/sidebar.js"></script> 
 </head>
 <body>
   <header>
-    <input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
     <div id="wrapper">
         <div class="overlay"></div>
-
         <!-- Sidebar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
@@ -88,7 +86,7 @@
     </div>
     <!-- /#wrapper -->
   </header>
-     
+     <input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
   <main>
     <div id="map-canvas"></div>
     <button id="getUsers">Get Users</button>
