@@ -294,9 +294,10 @@ html { height: 100%;}
   border: solid 5px rgb(84, 12, 4);
   width: 500px;
   text-align: center;
-  margin-left: 300px;
+  margin: 15px auto; 
+  /*margin-top: 15px;*/
   background-color: black;
-  color: rgb(84, 12, 4);
+  color: rgb(200, 200, 200);
   opacity: 0.8;
 }
 

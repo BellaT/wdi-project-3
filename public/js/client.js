@@ -413,6 +413,13 @@ Zombie.setupGoogleMaps = function(){
   // heatmap.setMap(this.map);
   // heatmap.set('radius', 10)
 
+  var heatmap = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    dissipating:true
+
+  });
+  heatmap.setMap(this.map);
+  heatmap.set('radius', 50)
 }
 
 Zombie.getTemplate = function(tpl, data) {
