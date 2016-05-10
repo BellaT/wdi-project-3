@@ -376,8 +376,7 @@ Zombie.setupGoogleMaps = function(){
 
   });
   heatmap.setMap(this.map);
-  heatmap.set('radius', 10)
-
+  heatmap.set('radius', 50)
 }
 
 Zombie.getTemplate = function(tpl, data) {
