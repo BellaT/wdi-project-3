@@ -52,10 +52,10 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
-    zoom: 5,
-    center: new google.maps.LatLng(51.5074, 0.1278),
+    zoom: 3,
+    center: new google.maps.LatLng(28.0339, 1.6596),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: [[{"featureType":"landscape","stylers":[{"hue":"#FFA800"},{"saturation":0},{"lightness":0},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#53FF00"},{"saturation":-73},{"lightness":40},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FBFF00"},{"saturation":0},{"lightness":0},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#00FFFD"},{"saturation":0},{"lightness":30},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#00BFFF"},{"saturation":6},{"lightness":8},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#679714"},{"saturation":33.4},{"lightness":-25.4},{"gamma":1}]}]]
+    styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}]
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
