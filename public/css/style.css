@@ -175,6 +175,16 @@ html { height: 100%;}
     box-shadow: none;
 }
 
+.dropdown-header {
+  word-wrap: break-word;
+  width: 100%;
+  white-space: normal;
+}
+
+img {
+  margin-right: 15px;
+}
+
 /*-------------------------------*/
 /*       Hamburger-Cross         */
 /*-------------------------------*/
