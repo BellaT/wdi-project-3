@@ -71,6 +71,42 @@ Zombie.setupGoogleMaps = function(){
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
 
+  var citymap = {
+    london: {
+      center: {lat: 51.500152, lng: -0.126236},
+      population: 1549123
+    },
+    chicago: {
+      center: {lat: 41.878, lng: -87.629},
+      population: 2714856
+    },
+    newyork: {
+      center: {lat: 40.714, lng: -74.005},
+      population: 8405837
+    },
+    losangeles: {
+      center: {lat: 34.052, lng: -118.243},
+      population: 3857799
+    },
+    vancouver: {
+      center: {lat: 49.25, lng: -123.1},
+      population: 603502
+    }
+  };
+
+  for (var city in citymap) {
+    // Add the circle for this city to the map.
+    var cityCircle = new google.maps.Circle({
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      map: Zombie.map,
+      center: citymap[city].center,
+      radius: Math.sqrt(citymap[city].population) * 25
+    });
+  }
 
   var heatmapData = [
     new google.maps.LatLng(37.782551, -122.445368),
@@ -370,13 +406,12 @@ Zombie.setupGoogleMaps = function(){
     new google.maps.LatLng(37.751266, -122.403355)
   ];
 
-  var heatmap = new google.maps.visualization.HeatmapLayer({
-    data: heatmapData,
-    dissipating:true
-
-  });
-  heatmap.setMap(this.map);
-  heatmap.set('radius', 10)
+  // var heatmap = new google.maps.visualization.HeatmapLayer({
+  //   data: heatmapData,
+  //   dissipating:true
+  // });
+  // heatmap.setMap(this.map);
+  // heatmap.set('radius', 10)
 
 }
 
