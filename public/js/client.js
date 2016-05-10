@@ -84,13 +84,18 @@ Zombie.setupGoogleMaps = function(){
     new google.maps.LatLng(37.785, -122.441),
     new google.maps.LatLng(37.785, -122.439),
     new google.maps.LatLng(37.785, -122.437),
-    new google.maps.LatLng(37.785, -122.435)
+    new google.maps.LatLng(37.785, -122.435),
+    new google.maps.LatLng(57.785, -100.435),
+    new google.maps.LatLng(57.785, -100.435),
+    new google.maps.LatLng(57.785, -100.435),
+    new google.maps.LatLng(57.785, -100.435)
   ];
 
   var heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatmapData
   });
   heatmap.setMap(this.map);
+
 
   // this.getService({ lat: 51.5074, lng: 0.1278 }, "hospital");
   // this.getService({ lat: 51.5074, lng: 0.1278 }, "hardware_store");
