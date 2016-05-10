@@ -7,94 +7,88 @@
   <script type="text/javascript" src="./vendor/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="./vendor/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./vendor/underscore/underscore-min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q" charset="utf-8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxM36DxD-TmmCuWMML0UXBVSirOUkF42Q&libraries=places" charset="utf-8"></script>
   <script type="text/javascript" src="./js/client.js"></script> 
   <script type="text/javascript" src="./js/sidebar.js"></script> 
 </head>
 <body>
   <header>
-   <!--  <nav>
-      <ul>
-        <li><a href="/home" data-template="home">Home</a></li>
-        <li><a href="/register" data-template="register">Register</a></li>
-        <li><a href="/login" data-template="login">Login</a></li>
-      </ul>
-    </nav> -->
-  </header>
-      <div id="wrapper">
-          <div class="overlay"></div>
-      
-          <!-- Sidebar -->
-          <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-              <ul class="nav sidebar-nav">
-                  <li class="sidebar-brand">
-                      <a href="#">
-                         BRAAINS!
-                      </a>
-                  </li>
-                  <li class="dropdown"> 
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Hospital<img src="./zombie-project/firstaid.png"><span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">Health yeah bitches!</li>
-                      </ul>
-                  </li>
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hardware Store<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">Hard-on for hardware!</li>
-                      </ul>
-                  </li>
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Airport<img src="./zombie-project/airport.png"><span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">Risky!</li>
-                      </ul>
-                  </li>
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grocery Store<img src="./zombie-project/supermarket.png"><span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">hmmmm food!!</li>
-                      </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gun Shop<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li class="dropdown-header">All your head exploding needs in one place</li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Army Base<img src="./zombie-project/army.png"><span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li class="dropdown-header">TANKS!!!</li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Camp Sites<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li class="dropdown-header">Safety</li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Police Station<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li class="dropdown-header">woop woop</li>
-                    </ul>
-                  </li>
-              </ul>
-          </nav>
-          <!-- /#sidebar-wrapper -->
+    <input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
+    <div id="wrapper">
+        <div class="overlay"></div>
 
-          <!-- Page Content -->
-          <!-- <div id="page-content-wrapper"> -->
-              <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-                  <span class="hamb-top"></span>
-            <span class="hamb-middle"></span>
-          <span class="hamb-bottom"></span>
-              </button>
-              
-      </div>
-      <!-- /#wrapper -->
-      <input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                       BRAAINS!
+                    </a>
+                </li>
+                <li class="dropdown"> 
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Hospital<img src="./zombie-project/firstaid.png"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li class="dropdown-header">Health yeah bitches!</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hardware Store<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li class="dropdown-header">Hard-on for hardware!</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Airport<img src="./zombie-project/airport.png"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li class="dropdown-header">Risky!</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grocery Store<img src="./zombie-project/supermarket.png"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li class="dropdown-header">hmmmm food!!</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gun Shop<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">All your head exploding needs in one place</li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Army Base<img src="./zombie-project/army.png"><span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">TANKS!!!</li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Camp Sites<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">Safety</li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Police Station<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">woop woop</li>
+                  </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <!-- <div id="page-content-wrapper"> -->
+            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+          <span class="hamb-middle"></span>
+        <span class="hamb-bottom"></span>
+            </button>
+            
+    </div>
+    <!-- /#wrapper -->
+  </header>
+     
   <main>
     <div id="map-canvas"></div>
     <button id="getUsers">Get Users</button>
