@@ -1,24 +1,24 @@
-var TrailApp = TrailApp || {}
+var Zombie = Zombie || {}
 
-TrailApp.setRequestHeader = function(xhr, settings) {
-  var token = TrailApp.getToken();
+Zombie.setRequestHeader = function(xhr, settings) {
+  var token = Zombie.getToken();
   if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
 }
 
-TrailApp.getToken = function() {
+Zombie.getToken = function() {
   return window.localStorage.getItem("token");
 }
 
-TrailApp.setToken = function(token) {
+Zombie.setToken = function(token) {
   return window.localStorage.setItem("token", token);
 }
 
-TrailApp.saveTokenIfPresent = function(data) {
+Zombie.saveTokenIfPresent = function(data) {
   if (data.token) return this.setToken(data.token);
   return false;
 }
 
-TrailApp.ajaxRequest = function(method, url, data) {
+Zombie.ajaxRequest = function(method, url, data) {
   $.ajax({
     method: method,
     url: "http://localhost:3000/api" + url,
@@ -26,13 +26,13 @@ TrailApp.ajaxRequest = function(method, url, data) {
     beforeSend: this.setRequestHeader
   }).done(function(data) {
     console.log(data);
-    TrailApp.saveTokenIfPresent(data);
+    Zombie.saveTokenIfPresent(data);
   }).fail(function(data) {
     console.log(data.responseJSON.message);
   });
 }
 
-TrailApp.submitForm = function() {
+Zombie.submitForm = function() {
   event.preventDefault();
   console.log("here")
 
@@ -40,15 +40,15 @@ TrailApp.submitForm = function() {
   var url    = $(this).attr('action');
   var data   = $(this).serialize();
 
-  TrailApp.ajaxRequest(method, url, data);
-  return TrailApp.getTemplate("home", null);
+  Zombie.ajaxRequest(method, url, data);
+  return Zombie.getTemplate("home", null);
 }
 
-TrailApp.getUsers = function() {
-  return TrailApp.ajaxRequest("get", "/users");
+Zombie.getUsers = function() {
+  return Zombie.ajaxRequest("get", "/users");
 }
 
-TrailApp.setupGoogleMaps = function(){
+Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
@@ -59,25 +59,11 @@ TrailApp.setupGoogleMaps = function(){
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
+  // this.getService({ lat: 51.5074, lng: 0.1278 }, "hospital");
+  // this.getService({ lat: 51.5074, lng: 0.1278 }, "hardware_store");
 }
 
-// TrailApp.trailRequest = function() {
-//   $.ajax({
-//     method: "GET",
-//     url: "https://trailapi-trailapi.p.mashape.com/?q[country_cont]=Australia",
-//     beforeSend: this.setTrailHeader
-//   }).done(function(data) {
-//     console.log(data);
-//   }).fail(function(data) {
-//     console.log(data.responseJSON.message);
-//   })
-// }
-
-// TrailApp.setTrailHeader = function(xhr, settings) {
-//   return xhr.setRequestHeader("X-Mashape-Key", "dRMIUG9qocmshKWGh0LwPHR1omzNp1olRuejsnYcUnn1htHxkP");
-// }
-
-TrailApp.getTemplate = function(tpl, data) {
+Zombie.getTemplate = function(tpl, data) {
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
 
   $.ajax({
@@ -91,28 +77,147 @@ TrailApp.getTemplate = function(tpl, data) {
   });
 }
 
-TrailApp.changePage = function() {
+Zombie.changePage = function() {
   event.preventDefault();
   var tpl = $(this).data("template");
-  TrailApp.getTemplate(tpl, null);
+  Zombie.getTemplate(tpl, null);
 }
 
-TrailApp.setupNavigation = function() {
+Zombie.setupNavigation = function() {
   $("header nav a").on("click", this.changePage);
 }
 
-TrailApp.setupForm = function() {
-  $('form').on('submit', this.submitForm);
+Zombie.setupForm = function() {
+  $('#search').on('submit', this.getLocation);
 }
 
-TrailApp.initialize = function(){
+Zombie.getLocation = function() {
+  // event.preventDefault();
+  var location = $("#pac-input").val();
+  console.log(location)
+  $.ajax({
+    url:"http://maps.googleapis.com/maps/api/geocode/json?address="+location+"&sensor=false",
+    type: "POST",
+    success:function(res){
+     var LatLng = { 
+      lat: res.results[0].geometry.location.lat,
+      lng: res.results[0].geometry.location.lng
+    }
+    Zombie.getService(LatLng, ["hospital"]);
+  }
+})
+}
+
+Zombie.getService = function(LatLng, type) {
+  var service = new google.maps.places.PlacesService(Zombie.map);
+  service.nearbySearch({
+    location: LatLng,
+    radius: 50000,
+    type: type
+  }, Zombie.processResults);
+}
+
+Zombie.processResults = function(results, status, pagination) {
+  if (status !== google.maps.places.PlacesServiceStatus.OK) {
+    return;
+  } else {
+    Zombie.createMarkers(results);
+  }
+}
+
+Zombie.createMarkers = function(places) {
+  var bounds = new google.maps.LatLngBounds();
+
+  for (var i = 0, place; place = places[i]; i++) {
+    console.log(place.icon)
+    var image = {
+      url: place.icon,
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
+
+    var marker = new google.maps.Marker({
+      map: Zombie.map,
+      icon: image,
+      title: place.name,
+      position: place.geometry.location
+    });
+
+    bounds.extend(place.geometry.location);
+  }
+  Zombie.map.fitBounds(bounds);
+}
+
+Zombie.autocomplete = function() {
+  var map = Zombie.map 
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      // map.fitBounds(bounds);
+      Zombie.getLocation();
+    });
+  }
+
+Zombie.initialize = function(){
   // $('#getUsers').on('click', this.getUsers);
   this.setupGoogleMaps();
-  // this.trailRequest();
   this.setupNavigation();
   this.setupForm();
+  this.autocomplete();
+
 }
 
 $(function(){
-  TrailApp.initialize();
+  Zombie.initialize();
 })
