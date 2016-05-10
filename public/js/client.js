@@ -34,7 +34,6 @@ Zombie.ajaxRequest = function(method, url, data) {
 
 Zombie.submitForm = function() {
   event.preventDefault();
-  console.log("here")
 
   var method = $(this).attr('method');
   var url    = $(this).attr('action');
@@ -49,12 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
+  "airport",
+  "campground",
   "hospital",
   "hardware_store",
   "pharmacy",
   "doctor",
-  "police",
-  "gas_station"
+  "police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -71,29 +71,27 @@ Zombie.setupGoogleMaps = function(){
 
 
   var heatmapData = [
-    new google.maps.LatLng(37.782, -122.447),
-    new google.maps.LatLng(37.782, -122.445),
-    new google.maps.LatLng(37.782, -122.443),
-    new google.maps.LatLng(37.782, -122.441),
-    new google.maps.LatLng(37.782, -122.439),
-    new google.maps.LatLng(37.782, -122.437),
-    new google.maps.LatLng(37.782, -122.435),
-    new google.maps.LatLng(37.785, -122.447),
-    new google.maps.LatLng(37.785, -122.445),
-    new google.maps.LatLng(37.785, -122.443),
-    new google.maps.LatLng(37.785, -122.441),
-    new google.maps.LatLng(37.785, -122.439),
-    new google.maps.LatLng(37.785, -122.437),
+    // new google.maps.LatLng(37.782, -122.447),
+    // new google.maps.LatLng(37.782, -122.445),
+    // new google.maps.LatLng(37.782, -122.443),
+    // new google.maps.LatLng(37.782, -122.441),
+    // new google.maps.LatLng(37.782, -122.439),
+    // new google.maps.LatLng(37.782, -122.437),
+    // new google.maps.LatLng(37.782, -122.435),
+    // new google.maps.LatLng(37.785, -122.447),
+    // new google.maps.LatLng(37.785, -122.445),
+    // new google.maps.LatLng(37.785, -122.443),
+    // new google.maps.LatLng(37.785, -122.441),
+    new google.maps.LatLng(51.5074, 0.1278),
+    new google.maps.LatLng(47.5162, 14.5501),
     new google.maps.LatLng(37.785, -122.435)
   ];
-
   var heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatmapData
   });
   heatmap.setMap(this.map);
+  heatmap.set('radius', 50)
 
-  // this.getService({ lat: 51.5074, lng: 0.1278 }, "hospital");
-  // this.getService({ lat: 51.5074, lng: 0.1278 }, "hardware_store");
 }
 
 Zombie.getTemplate = function(tpl, data) {
@@ -137,10 +135,9 @@ Zombie.getLocation = function() {
         lng: res.results[0].geometry.location.lng
       }
 
-      // Zombie.iconTypes.forEach(function(type) {
-      //   Zombie.getService(LatLng, type);
-      // });
-      Zombie.getService(LatLng, "hospital");
+      Zombie.iconTypes.forEach(function(type) {
+        Zombie.getService(LatLng, type);
+      });
     }
   });
 }
@@ -159,7 +156,7 @@ Zombie.processResults = function(results, status, pagination) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     return;
   } else {
-    Zombie.createMarkers(results);
+    return Zombie.createMarkers(results);
   }
 }
 
@@ -167,7 +164,6 @@ Zombie.createMarkers = function(places) {
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0, place; place = places[i]; i++) {
-    console.log(place.types[0])
     var image = {
       url: "../zombie-project/" + place.types[0] + ".png",
       size: new google.maps.Size(71, 71),
@@ -181,11 +177,28 @@ Zombie.createMarkers = function(places) {
       icon: image,
       title: place.name,
       position: place.geometry.location
-    });
+    }); 
 
+    var contentString = '<p>' + place.name + '</p>';
+
+    Zombie.addInfoWindow(marker, contentString);
     bounds.extend(place.geometry.location);
   }
   Zombie.map.fitBounds(bounds);
+}
+
+Zombie.addInfoWindow = function(marker, contentString) {
+  var infoWindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  marker.addListener("mouseover", function(){
+    infoWindow.open(Zombie.map, this);
+  });
+
+  marker.addListener("mouseout", function(){
+    infoWindow.close();
+  });
 }
 
 Zombie.autocomplete = function() {
@@ -241,7 +254,6 @@ Zombie.autocomplete = function() {
         bounds.extend(place.geometry.location);
       }
     });
-    // map.fitBounds(bounds);
     Zombie.getLocation();
   });
 }
