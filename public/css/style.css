@@ -43,6 +43,7 @@ html { height: 100%;}
     overflow-y: auto;
     overflow-x: hidden;
     background: #1a1a1a;
+    opacity: 0.9;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -289,6 +290,15 @@ html { height: 100%;}
   -webkit-transition: all .35s ease-in-out;
 }
 
+#pac-input.form-control {
+  border: solid 5px rgb(84, 12, 4);
+  width: 500px;
+  text-align: center;
+  margin-left: 300px;
+  background-color: black;
+  color: rgb(84, 12, 4);
+  opacity: 0.8;
+}
 
 /*-------------------------------*/
 /*            Overlay            */
