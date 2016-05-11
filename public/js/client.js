@@ -61,7 +61,7 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
-    zoom: 3,
+    zoom: 2,
     center: new google.maps.LatLng(28.0339, -15.5678),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}],
@@ -124,10 +124,37 @@ Zombie.setupGoogleMaps = function(){
       center: {lat: -49.450071, lng: 69.464789},
       population: 65324
     },
+    MexicoCity: {
+      center: {lat: 20.6345, lng: -102.5528},
+      population: 65324798,
+    },
+    Melbourne: {
+      center: {lat: -37.671812, lng: 145.036239},
+      population: 95324798,
+    },
+    PortElizabeth: {
+      center: {lat: -28.765319, lng: 30.493061},
+      population: 9532417,
+    },
+    Ntoto: {
+      center: {lat: -1.880540, lng: 28.574132},
+      population: 199999899,
+    },
+    Ghana: {
+      center: {lat: 6.289979, lng: 0.820303},
+      population: 84930387,
+    },
+    Barcelona: {
+      center: {lat: 41.408675, lng: 2.115806},
+      population: 19969501,
+    },
+    Palmyra: {
+      center: {lat: 34.186014, lng: 39.019998},
+      population: 9532479,
+    },
   };
 
   for (var city in citymap) {
-    // Add the circle for this city to the map.
     var cityCircle = new google.maps.Circle({
       strokeColor: 'rgb(155, 0, 0)',
       strokeOpacity: 0.8,
@@ -136,7 +163,8 @@ Zombie.setupGoogleMaps = function(){
       fillOpacity: 0.65,
       map: Zombie.map,
       center: citymap[city].center,
-      radius: Math.sqrt(citymap[city].population) * 25
+      radius: Math.sqrt(citymap[city].population) * 25,
+      icon: "/zombie-project/zombie-outbreak.png",
     });
   }
 }
@@ -259,20 +287,16 @@ Zombie.autocomplete = function() {
   });
 
   var markers = [];
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
     if (places.length == 0) return;
 
-    // Clear out the old markers.
     markers.forEach(function(marker) {
       marker.setMap(null);
     });
 
     markers = [];
 
-    // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
     
     places.forEach(function(place) {
@@ -284,7 +308,6 @@ Zombie.autocomplete = function() {
         scaledSize: new google.maps.Size(25, 25)
       };
 
-      // Create a marker for each place.
       markers.push(new google.maps.Marker({
         map: map,
         icon: icon,
@@ -294,7 +317,6 @@ Zombie.autocomplete = function() {
       }));
 
       if (place.geometry.viewport) {
-        // Only geocodes have viewport.
         bounds.union(place.geometry.viewport);
       } else {
         bounds.extend(place.geometry.location);
@@ -324,7 +346,7 @@ Zombie.createFakeMarker = function() {
     icon: "./zombie-project/zombie-outbreak.png",
     position: newYork,
     map: Zombie.map,
-    title: 'New York'
+    title: 'New York',
   });
   marker.addListener('click', function() {
     infowindow.open(Zombie.map, marker);
@@ -332,7 +354,7 @@ Zombie.createFakeMarker = function() {
       var $iwOuter = $(".gm-style-iw");
       $iwOuter.next("div").css({
        'border': '7px solid #790000',
-       'radius': '100%' 
+       'border-radius': '100%' 
       });
       $iwOuter.prev().find("*").css("background-color", "rgba(0,0,0,0.5)");
     })();
@@ -372,7 +394,6 @@ Zombie.setupModal = function() {
 }
 
 Zombie.initialize = function() {
-  // $('#getUsers').on('click', this.getUsers);
   this.setupSidebar();
   this.setupGoogleMaps();
   this.setupNavigation();
