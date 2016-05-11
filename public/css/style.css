@@ -8,6 +8,15 @@ html, body {
   margin: 0 auto;
 }
 
+#story-modal {
+  margin-top: 200px;
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: none;
+}
+
 body {
   position: relative;
   overflow-x: hidden;

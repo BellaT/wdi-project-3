@@ -48,13 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-  "airport",
-  "campground",
-  "hospital",
-  "hardware_store",
-  "pharmacy",
-  "doctor",
-  "police"
+"airport",
+"campground",
+"hospital",
+"hardware_store",
+"pharmacy",
+"doctor",
+"police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -289,7 +289,8 @@ Zombie.autocomplete = function() {
         map: map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
+        position: place.geometry.location,
+        animation: google.maps.Animation.DROP
       }));
 
       if (place.geometry.viewport) {
@@ -353,12 +354,17 @@ Zombie.setupSidebar = function() {
   });
 }
 
+Zombie.setupModal = function() {
+  $("#story-modal").modal('show');
+}
+
 Zombie.initialize = function() {
   // $('#getUsers').on('click', this.getUsers);
   this.setupSidebar();
   this.setupGoogleMaps();
   this.setupNavigation();
   this.setupForm();
+  this.setupModal();
   this.autocomplete();
   this.createFakeMarker();
 }
