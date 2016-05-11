@@ -433,7 +433,7 @@ Zombie.appendVideos = function(data) {
   var $container = $("#videos-container");
 
   $(videos).each(function(index) {
-    var content = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
+    var content = '<iframe class="youtube-video" width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
     $container.append(content);
   });
 }
