@@ -1,5 +1,7 @@
 var Zombie = Zombie || {}
 
+Zombie.infowindow;
+
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
   if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -327,12 +329,17 @@ Zombie.autocomplete = function() {
 
 Zombie.createFakeMarkers = function(image, lat, lng){
   lat = parseFloat(lat)
+<<<<<<< HEAD
   lng = parseFloat(lng)
+=======
+  lng = parseFloat(lng) 
+>>>>>>> 8da4395541f727202610f275605ea917b7ce609c
  
   var city = { lat: lat, lng: lng };
 
   var contentString = "<img src='" + image + "' class='image'>";
 
+<<<<<<< HEAD
   var infowindow = new google.maps.InfoWindow({
     content: contentString,
     maxWidth: 400,
@@ -341,6 +348,8 @@ Zombie.createFakeMarkers = function(image, lat, lng){
     positon: 'relative'
   });
 
+=======
+>>>>>>> 8da4395541f727202610f275605ea917b7ce609c
   var marker = new google.maps.Marker({
     icon: "./zombie-project/zombie-outbreak.png",
     position: city,
@@ -348,18 +357,40 @@ Zombie.createFakeMarkers = function(image, lat, lng){
   });
 
   marker.addListener('click', function() {
-    infowindow.open(Zombie.map, marker);
-    return (function() {
+    if (typeof Zombie.infowindow !== "undefined") Zombie.infowindow.close();
+
+    Zombie.infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      maxWidth: 400,
+      maxHeight: 400, 
+      backgroundColor: 'black'
+    });
+
+    Zombie.infowindow.open(Zombie.map, marker);
+
+    google.maps.event.addListener(Zombie.infowindow, 'domready', function() { 
+      $(".gm-style-iw").hide();
       var $iwOuter = $(".gm-style-iw");
+<<<<<<< HEAD
       $iwOuter.next("div").css({
        'border': '7px solid #790000',
        'border-radius': '100%', 
+=======
+      var $x       = $iwOuter.next("div");
+      var $bg      = $iwOuter.prev().find("*");
+
+      $x.css({
+        'border': '7px solid #790000',
+        'border-radius': '100%' 
+>>>>>>> 8da4395541f727202610f275605ea917b7ce609c
       });
-      $iwOuter.prev().find("*").css({
+
+      $bg.css({
         "background-color": "rgba(0,0,0,0.2)",
         "border-radius": "10px"
       });
-    })();
+      $(".gm-style-iw").fadeIn();
+    });
   }); 
 
 }
@@ -383,10 +414,7 @@ Zombie.requestFakeMarkers = function() {
     // dataType: "json"
   }).done(function(data){
     Zombie.loopThroughFakeMarkers(data);
-  })
-
-  
-  
+  })   
 }
 
 Zombie.setupSidebar = function() {
