@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>World Trails</title>
+  <title>Zombie</title>
   <link rel="stylesheet" type="text/css" href="./vendor/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <script type="text/javascript" src="./vendor/jquery/dist/jquery.min.js"></script>
@@ -79,23 +79,21 @@
                 </li>
             </ul>
         </nav>
-        <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    <!-- <div id="page-content-wrapper"> -->
+    <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+      <span class="hamb-top"></span>
+      <span class="hamb-middle"></span>
+      <span class="hamb-bottom"></span>
+    </button>
 
-        <!-- Page Content -->
-        <!-- <div id="page-content-wrapper"> -->
-            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-          <span class="hamb-middle"></span>
-        <span class="hamb-bottom"></span>
-            </button>
-            
-    </div>
-    <!-- /#wrapper -->
-  </header>
-     <input type="text" class="form-control" id="pac-input" style="right: 0;" placeholder="Enter a location">
-  <main>
-    <div id="map-canvas"></div>
-    <button id="getUsers">Get Users</button>
-  </main>
+  </div>
+  <!-- /#wrapper -->
+</header>
+<input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
+<main>
+  <div id="map-canvas"></div>
+  <button id="getUsers">Get Users</button>
+</main>
 </body>
 </html>
