@@ -48,13 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-"airport",
-"campground",
-"hospital",
-"hardware_store",
-"pharmacy",
-"doctor",
-"police"
+  "airport",
+  "campground",
+  "hospital",
+  "hardware_store",
+  "pharmacy",
+  "doctor",
+  "police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -361,9 +361,9 @@ Zombie.createFakeMarker = function() {
 }
 
 Zombie.setupSidebar = function() {
-  var trigger = $('.hamburger'),
-  overlay = $('.overlay'),
-  isClosed = false;
+  var trigger = $('.hamburger');
+  var overlay = $('.overlay');
+  var isClosed = false;
 
   trigger.click(function () {
     hamburger_cross();      
