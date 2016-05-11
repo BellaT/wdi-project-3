@@ -332,6 +332,21 @@ strong {
   background-size: cover;
 }
 
+div.info {
+    position: absolute;
+    z-index: 999;
+    width: 200px;
+    height: 100px;
+    display: none;
+    background-color: #fff;
+    border: 3px solid #ebebeb;
+    padding: 10px;
+}
+
+.black {
+  background-color: black;
+}
+
 /*-------------------------------*/
 /*            Overlay            */
 /*-------------------------------*/
