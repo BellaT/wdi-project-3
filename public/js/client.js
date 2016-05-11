@@ -61,7 +61,7 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
-    zoom: 3,
+    zoom: 2,
     center: new google.maps.LatLng(28.0339, -15.5678),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}],
@@ -124,6 +124,10 @@ Zombie.setupGoogleMaps = function(){
       center: {lat: -49.450071, lng: 69.464789},
       population: 65324
     },
+    island: {
+      center: {lat: -49.450071, lng: 69.464789},
+      population: 65324,
+    },
   };
 
   for (var city in citymap) {
@@ -136,7 +140,8 @@ Zombie.setupGoogleMaps = function(){
       fillOpacity: 0.65,
       map: Zombie.map,
       center: citymap[city].center,
-      radius: Math.sqrt(citymap[city].population) * 25
+      radius: Math.sqrt(citymap[city].population) * 25,
+      icon: "/zombie-project/zombie-outbreak.png"
     });
   }
 }
