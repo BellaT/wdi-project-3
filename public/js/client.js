@@ -325,6 +325,10 @@ Zombie.autocomplete = function() {
   });
 }
 
+Zombie.styleInfoBox = function() {
+  // cancelButton.css("display", "none");
+}
+
 Zombie.createFakeMarker = function() {
   var newYork = {lat: 40.7128, lng: -74.0059};
 
@@ -333,7 +337,8 @@ Zombie.createFakeMarker = function() {
   var infowindow = new google.maps.InfoWindow({
     content: contentString,
     maxWidth: 400,
-    maxHeight: 400,
+    maxHeight: 400, 
+    backgroundColor: 'black'
   });
 
   var marker = new google.maps.Marker({
@@ -344,6 +349,14 @@ Zombie.createFakeMarker = function() {
   });
   marker.addListener('click', function() {
     infowindow.open(Zombie.map, marker);
+    return (function() {
+      var $iwOuter = $(".gm-style-iw");
+      $iwOuter.next("div").css({
+       'border': '7px solid #790000',
+       'border-radius': '100%' 
+      });
+      $iwOuter.prev().find("*").css("background-color", "rgba(0,0,0,0.5)");
+    })();
   }); 
 }
 
@@ -382,6 +395,7 @@ Zombie.initialize = function() {
   this.setupForm();
   this.autocomplete();
   this.createFakeMarker();
+  this.styleInfoBox();
 }
 
 $(function(){
