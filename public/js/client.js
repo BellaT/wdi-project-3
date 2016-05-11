@@ -61,8 +61,8 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
-    zoom: 2,
-    center: new google.maps.LatLng(28.0339, 1.6596),
+    zoom: 3,
+    center: new google.maps.LatLng(28.0339, -15.5678),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}],
     mapTypeControl: false,
