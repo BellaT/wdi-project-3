@@ -330,8 +330,8 @@ Zombie.autocomplete = function() {
 }
 
 Zombie.createFakeMarkers = function(image, lat, lng){
-  lat = parseFloat(lat)
-  lng = parseFloat(lng)
+  lat = parseFloat(lat);
+  lng = parseFloat(lng);
 
   console.log("Lat: " + lat); 
   console.log("Lng: " + lng); 
@@ -374,16 +374,16 @@ Zombie.createFakeMarkers = function(image, lat, lng){
   }); 
 }
 
-Zombie.loopThroughFakeMarkers = function(markers){
-  $.each(markers, function(i, marker){
-    $.each(marker, function(i, marker){ 
+Zombie.loopThroughFakeMarkers = function(markers) {
+  $.each(markers, function(i, marker) {
+    $.each(marker, function(i, marker) { 
 
-      var image = marker.image
-      var lat   = marker.lat
-      var lng   = marker.lng
-      Zombie.createFakeMarkers(image, lat, lng)
-    })
-  })
+      var image = marker.image;
+      var lat   = marker.lat;
+      var lng   = marker.lng;
+      Zombie.createFakeMarkers(image, lat, lng);
+    });
+  });
 }
 
 Zombie.requestFakeMarkers = function() {
@@ -401,7 +401,7 @@ Zombie.setupSidebar = function() {
   var overlay = $('.overlay');
   var isClosed = false;
 
-  trigger.click(function () {
+  trigger.click(function() {
     hamburger_cross();      
   });
 
@@ -419,7 +419,7 @@ Zombie.setupSidebar = function() {
     }
   }
   
-  $('[data-toggle="offcanvas"]').click(function () {
+  $('[data-toggle="offcanvas"]').click(function() {
     $('#wrapper').toggleClass('toggled');
   });
 }
