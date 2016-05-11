@@ -48,13 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-"airport",
-"campground",
-"hospital",
-"hardware_store",
-"pharmacy",
-"doctor",
-"police"
+  "airport",
+  "campground",
+  "hospital",
+  "hardware_store",
+  "pharmacy",
+  "doctor",
+  "police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -171,7 +171,6 @@ Zombie.setupGoogleMaps = function(){
 
 Zombie.getTemplate = function(tpl, data) {
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
-
   $.ajax({
     url: templateUrl,
     method: "GET",
@@ -180,6 +179,9 @@ Zombie.getTemplate = function(tpl, data) {
     var parsedTemplate = _.template(templateData);
     var compliedTemplate = parsedTemplate(data);
     $("main").html(compliedTemplate);
+    if (tpl == "videos") {
+      Zombie.getVideos();
+    }
   });
 }
 
@@ -190,7 +192,8 @@ Zombie.changePage = function() {
 }
 
 Zombie.setupNavigation = function() {
-  $("header nav a").on("click", this.changePage);
+  // $("header nav a").on("click", this.changePage);
+  $("#videos").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
@@ -326,12 +329,8 @@ Zombie.autocomplete = function() {
   });
 }
 
-Zombie.styleInfoBox = function() {
-  // cancelButton.css("display", "none");
-}
-
 Zombie.createFakeMarker = function() {
-  var newYork = {lat: 40.7128, lng: -74.0059};
+  var newYork = { lat: 40.7128, lng: -74.0059 };
 
   var contentString = "<img src='./photos/zombie1.jpg' class='image'>";
 
@@ -396,34 +395,34 @@ Zombie.setupModal = function() {
 Zombie.appendVideos = function(data) {
   var videos = data.items;
   var $container = $("#videos-container");
+  console.log('here')
 
   $(videos).each(function(index) {
     var content = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
-    console.log(content)
     $container.append(content);
+    console.log('here')
   });
 }
 
 Zombie.getVideos = function() {
+  console.log('here')
   $.ajax({
     type: "GET",
-    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0"
+    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=10"
   }).done(function(data) {
+    console.log('here')
     Zombie.appendVideos(data);
   });
 }
 
 Zombie.initialize = function() {
   this.setupSidebar();
-  // this.setupGoogleMaps();
   this.setupNavigation();
   this.setupForm();
   this.setupModal();
-  // this.autocomplete();
-  // this.createFakeMarker();
-  // this.styleInfoBox();
-
-  this.getVideos();
+  this.setupGoogleMaps();
+  this.autocomplete();
+  this.createFakeMarker();
 }
 
 $(function(){
