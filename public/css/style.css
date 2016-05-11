@@ -322,6 +322,9 @@ strong {
   background-color: black;
   color: rgb(200, 200, 200);
   opacity: 0.8;
+  z-index: -1;
+  position: fixed;
+
 }
 
 /*-------------------------------*/
