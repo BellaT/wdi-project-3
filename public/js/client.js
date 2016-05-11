@@ -315,7 +315,6 @@ Zombie.setupSidebar = function() {
   });
 
   function hamburger_cross() {
-
     if (isClosed == true) {          
       overlay.hide();
       trigger.removeClass('is-open');
