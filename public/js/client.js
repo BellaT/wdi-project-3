@@ -164,7 +164,7 @@ Zombie.setupGoogleMaps = function(){
       map: Zombie.map,
       center: citymap[city].center,
       radius: Math.sqrt(citymap[city].population) * 25,
-      icon: "/zombie-project/zombie-outbreak.png",
+      icon: "/images/zombie-outbreak.png",
     });
   }
 }
@@ -243,7 +243,7 @@ Zombie.createMarkers = function(places) {
 
   for (var i = 0, place; place = places[i]; i++) {
     var image = {
-      url: "../zombie-project/" + place.types[0] + ".png",
+      url: "../images/" + place.types[0] + ".png",
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
@@ -342,7 +342,7 @@ Zombie.createFakeMarker = function() {
   });
 
   var marker = new google.maps.Marker({
-    icon: "./zombie-project/zombie-outbreak.png",
+    icon: "./images/zombie-outbreak.png",
     position: newYork,
     map: Zombie.map,
     title: 'New York',
@@ -405,12 +405,10 @@ Zombie.appendVideos = function(data) {
 }
 
 Zombie.getVideos = function() {
-  console.log('here')
   $.ajax({
     type: "GET",
     url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=10"
   }).done(function(data) {
-    console.log('here')
     Zombie.appendVideos(data);
   });
 }
