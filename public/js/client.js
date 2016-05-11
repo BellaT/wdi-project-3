@@ -48,13 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-  "airport",
-  "campground",
-  "hospital",
-  "hardware_store",
-  "pharmacy",
-  "doctor",
-  "police"
+"airport",
+"campground",
+"hospital",
+"hardware_store",
+"pharmacy",
+"doctor",
+"police"
 ]
 
 Zombie.setupGoogleMaps = function(){

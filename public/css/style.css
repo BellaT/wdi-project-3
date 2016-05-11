@@ -179,12 +179,19 @@ html { height: 100%;}
   word-wrap: break-word;
   width: 100%;
   white-space: normal;
-  color: grey;
+  color: white;
   opacity: 0.9;
 }
 
-img {
-  margin-right: 15px;
+strong {
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.5em;
+}
+
+.icons {
+  margin-top: 5px;
+  margin-right: 10px;
+  float: left;
 }
 
 /*-------------------------------*/
