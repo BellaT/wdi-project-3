@@ -393,15 +393,37 @@ Zombie.setupModal = function() {
   $("#story-modal").modal('show');
 }
 
+Zombie.appendVideos = function(data) {
+  var videos = data.items;
+  var $container = $("#videos-container");
+
+  $(videos).each(function(index) {
+    var content = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
+    console.log(content)
+    $container.append(content);
+  });
+}
+
+Zombie.getVideos = function() {
+  $.ajax({
+    type: "GET",
+    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0"
+  }).done(function(data) {
+    Zombie.appendVideos(data);
+  });
+}
+
 Zombie.initialize = function() {
   this.setupSidebar();
-  this.setupGoogleMaps();
+  // this.setupGoogleMaps();
   this.setupNavigation();
   this.setupForm();
   this.setupModal();
-  this.autocomplete();
-  this.createFakeMarker();
-  this.styleInfoBox();
+  // this.autocomplete();
+  // this.createFakeMarker();
+  // this.styleInfoBox();
+
+  this.getVideos();
 }
 
 $(function(){
