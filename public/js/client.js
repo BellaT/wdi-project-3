@@ -329,10 +329,17 @@ Zombie.autocomplete = function() {
   });
 }
 
-Zombie.createFakeMarker = function() {
-  var newYork = { lat: 40.7128, lng: -74.0059 };
+Zombie.createFakeMarkers = function(image, lat, lng){
+  lat = parseFloat(lat)
+  lng = parseFloat(lng)
 
-  var contentString = "<img src='./photos/zombie1.jpg' class='image'>";
+  console.log("Lat: " + lat); 
+  console.log("Lng: " + lng); 
+  console.log("image: " + image); 
+ 
+  var city = { lat: lat, lng: lng };
+
+  var contentString = "<img src='" + image + "' class='image'>";
 
   var infowindow = new google.maps.InfoWindow({
     content: contentString,
@@ -343,10 +350,14 @@ Zombie.createFakeMarker = function() {
 
   var marker = new google.maps.Marker({
     icon: "./images/zombie-outbreak.png",
-    position: newYork,
+    position: city,
     map: Zombie.map,
     title: 'New York',
   });
+
+  console.log(marker)
+  console.log("******");
+
   marker.addListener('click', function() {
     infowindow.open(Zombie.map, marker);
     return (function() {
@@ -355,9 +366,34 @@ Zombie.createFakeMarker = function() {
        'border': '7px solid #790000',
        'border-radius': '100%' 
       });
-      $iwOuter.prev().find("*").css("background-color", "rgba(0,0,0,0.5)");
+      $iwOuter.prev().find("*").css({
+        "background-color": "rgba(0,0,0,0.2)",
+        "border-radius": "10px"
+      });
     })();
   }); 
+}
+
+Zombie.loopThroughFakeMarkers = function(markers){
+  $.each(markers, function(i, marker){
+    $.each(marker, function(i, marker){ 
+
+      var image = marker.image
+      var lat   = marker.lat
+      var lng   = marker.lng
+      Zombie.createFakeMarkers(image, lat, lng)
+    })
+  })
+}
+
+Zombie.requestFakeMarkers = function() {
+  $.ajax({
+    url: "http://localhost:3000/api/markers",
+    method: "GET"
+    // dataType: "json"
+  }).done(function(data){
+    Zombie.loopThroughFakeMarkers(data);
+  })
 }
 
 Zombie.setupSidebar = function() {
@@ -420,7 +456,7 @@ Zombie.initialize = function() {
   this.setupModal();
   this.setupGoogleMaps();
   this.autocomplete();
-  this.createFakeMarker();
+  this.requestFakeMarkers();
 }
 
 $(function(){

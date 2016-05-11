@@ -30,13 +30,13 @@ app.use(methodOverride(function(req, res){
   }
 }));
 
-app.use('/api', expressJWT({ secret: config.secret })
-  .unless({
-    path: [
-      { url: '/api/login', methods: ['POST'] },
-      { url: '/api/register', methods: ['POST'] }
-    ]
-  }));
+// app.use('/api', expressJWT({ secret: config.secret })
+//   .unless({
+//     path: [
+//       { url: '/api/login', methods: ['POST'] },
+//       { url: '/api/register', methods: ['POST'] }
+//     ]
+//   }));
   
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {

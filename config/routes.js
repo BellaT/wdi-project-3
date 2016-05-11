@@ -4,6 +4,7 @@ var router   = express.Router();
 // ***** CONTROLLERS ***** //
 var usersController           = require('../controllers/users');
 var authenticationsController = require('../controllers/authentications');
+var markersController         = require('../controllers/markers');
 
 // ***** ROUTES ***** //
 router.post('/login', authenticationsController.login);
@@ -17,5 +18,8 @@ router.route('/users/:id')
   .put(usersController.update)
   .patch(usersController.update)
   .delete(usersController.delete);
+
+router.route('/markers')
+  .get(markersController.index);
 
 module.exports = router;
