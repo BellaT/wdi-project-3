@@ -250,12 +250,10 @@ Zombie.addInfoWindow = function(marker, contentString) {
 
 Zombie.autocomplete = function() {
   var map = Zombie.map 
-  // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
   });
@@ -305,6 +303,28 @@ Zombie.autocomplete = function() {
   });
 }
 
+Zombie.createFakeMarker = function() {
+  var newYork = {lat: 40.7128, lng: -74.0059};
+
+  var contentString = "<img src='./photos/zombie1.jpg' class='image'>";
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 400,
+    maxHeight: 400
+  });
+
+  var marker = new google.maps.Marker({
+    icon: "./zombie-project/zombie-outbreak.png",
+    position: newYork,
+    map: Zombie.map,
+    title: 'New York'
+  });
+  marker.addListener('click', function() {
+    infowindow.open(Zombie.map, marker);
+  }); 
+}
+
 Zombie.setupSidebar = function() {
   var trigger = $('.hamburger');
   var overlay = $('.overlay');
@@ -340,6 +360,7 @@ Zombie.initialize = function() {
   this.setupNavigation();
   this.setupForm();
   this.autocomplete();
+  this.createFakeMarker();
 }
 
 $(function(){
