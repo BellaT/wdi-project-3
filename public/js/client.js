@@ -166,14 +166,13 @@ Zombie.setupGoogleMaps = function(){
       map: Zombie.map,
       center: citymap[city].center,
       radius: Math.sqrt(citymap[city].population) * 25,
-      icon: "/zombie-project/zombie-outbreak.png",
+      icon: "/images/zombie-outbreak.png",
     });
   }
 }
 
 Zombie.getTemplate = function(tpl, data) {
   var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
-
   $.ajax({
     url: templateUrl,
     method: "GET",
@@ -182,6 +181,9 @@ Zombie.getTemplate = function(tpl, data) {
     var parsedTemplate = _.template(templateData);
     var compliedTemplate = parsedTemplate(data);
     $("main").html(compliedTemplate);
+    if (tpl == "videos") {
+      Zombie.getVideos();
+    }
   });
 }
 
@@ -192,7 +194,8 @@ Zombie.changePage = function() {
 }
 
 Zombie.setupNavigation = function() {
-  $("header nav a").on("click", this.changePage);
+  // $("header nav a").on("click", this.changePage);
+  $("#videos").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
@@ -242,7 +245,7 @@ Zombie.createMarkers = function(places) {
 
   for (var i = 0, place; place = places[i]; i++) {
     var image = {
-      url: "../zombie-project/" + place.types[0] + ".png",
+      url: "../images/" + place.types[0] + ".png",
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
@@ -314,7 +317,8 @@ Zombie.autocomplete = function() {
         map: map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
+        position: place.geometry.location,
+        animation: google.maps.Animation.DROP
       }));
 
       if (place.geometry.viewport) {
@@ -351,9 +355,10 @@ Zombie.createFakeMarkers = function(image, lat, lng){
 =======
 >>>>>>> 8da4395541f727202610f275605ea917b7ce609c
   var marker = new google.maps.Marker({
-    icon: "./zombie-project/zombie-outbreak.png",
+    icon: "./images/zombie-outbreak.png",
     position: city,
-    map: Zombie.map
+    map: Zombie.map,
+    title: 'New York',
   });
 
   marker.addListener('click', function() {
@@ -392,19 +397,18 @@ Zombie.createFakeMarkers = function(image, lat, lng){
       $(".gm-style-iw").fadeIn();
     });
   }); 
-
 }
 
-Zombie.loopThroughFakeMarkers = function(markers){
-  $.each(markers, function(i, marker){
-    $.each(marker, function(i, marker){ 
+Zombie.loopThroughFakeMarkers = function(markers) {
+  $.each(markers, function(i, marker) {
+    $.each(marker, function(i, marker) { 
 
-      var image = marker.image
-      var lat   = marker.lat
-      var lng   = marker.lng
-      Zombie.createFakeMarkers(image, lat, lng)
-    })
-  })
+      var image = marker.image;
+      var lat   = marker.lat;
+      var lng   = marker.lng;
+      Zombie.createFakeMarkers(image, lat, lng);
+    });
+  });
 }
 
 Zombie.requestFakeMarkers = function() {
@@ -414,7 +418,7 @@ Zombie.requestFakeMarkers = function() {
     // dataType: "json"
   }).done(function(data){
     Zombie.loopThroughFakeMarkers(data);
-  })   
+  })
 }
 
 Zombie.setupSidebar = function() {
@@ -422,7 +426,7 @@ Zombie.setupSidebar = function() {
   var overlay = $('.overlay');
   var isClosed = false;
 
-  trigger.click(function () {
+  trigger.click(function() {
     hamburger_cross();      
   });
 
@@ -440,19 +444,42 @@ Zombie.setupSidebar = function() {
     }
   }
   
-  $('[data-toggle="offcanvas"]').click(function () {
+  $('[data-toggle="offcanvas"]').click(function() {
     $('#wrapper').toggleClass('toggled');
+  });
+}
+
+Zombie.setupModal = function() {
+  $("#story-modal").modal('show');
+}
+
+Zombie.appendVideos = function(data) {
+  var videos = data.items;
+  var $container = $("#videos-container");
+
+  $(videos).each(function(index) {
+    var content = '<iframe class="youtube-video" width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
+    $container.append(content);
+  });
+}
+
+Zombie.getVideos = function() {
+  $.ajax({
+    type: "GET",
+    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=10"
+  }).done(function(data) {
+    Zombie.appendVideos(data);
   });
 }
 
 Zombie.initialize = function() {
   this.setupSidebar();
-  this.setupGoogleMaps();
   this.setupNavigation();
   this.setupForm();
+  this.setupModal();
+  this.setupGoogleMaps();
   this.autocomplete();
   this.requestFakeMarkers();
-  // this.styleInfoBox();
 }
 
 $(function(){

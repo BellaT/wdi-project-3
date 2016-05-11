@@ -8,6 +8,34 @@ html, body {
   margin: 0 auto;
 }
 
+#story-modal {
+  margin-top: 200px;
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: none;
+}
+
+strong {
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.5em;
+}
+
+.icons {
+  margin-top: 5px;
+  margin-right: 10px;
+  float: left;
+}
+
+#videos {
+  padding-left: 0;
+}
+
+.youtube-video {
+  margin: 20px auto;
+}
+
 body {
   position: relative;
   overflow-x: hidden;
@@ -184,17 +212,6 @@ html { height: 100%;}
   /*background: #8E0E00;*/ /* fallback for old browsers */
   /*background: -webkit-linear-gradient(to left, #540C04 , #1F1C18); /* Chrome 10-25, Safari 5.1-6 *//**/
   /*background: linear-gradient(to left, #540C04 , #1F1C18);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-strong {
-  -webkit-font-smoothing: antialiased;
-  font-size: 1.5em;
-}
-
-.icons {
-  margin-top: 5px;
-  margin-right: 10px;
-  float: left;
 }
 
 /*-------------------------------*/
