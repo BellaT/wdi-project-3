@@ -91,17 +91,49 @@ Zombie.setupGoogleMaps = function(){
     vancouver: {
       center: {lat: 49.25, lng: -123.1},
       population: 603502
-    }
+    },
+    Mumbai: {
+      center: {lat: 19.0760, lng: 72.8777},
+      population: 13467235
+    },
+    Cairo: {
+      center: {lat: 30.0444, lng: 31.2357},
+      population: 158592355
+    },
+    Patient_0: {
+      center: {lat: -14.2350, lng: -51.9253},
+      population: 1532453452
+    },
+    Wuhan: {
+      center: {lat: 30.3054, lng: 113.4112},
+      population: 234090983
+    },
+    Argentina: {
+      center: {lat: -30.2350, lng: -60.9253},
+      population: 153245345.5
+    },
+    Paris: {
+      center: {lat: 48.8566, lng: 2.3522},
+      population: 5532434
+    },
+    Milan: {
+      center: {lat: 45.460053, lng: 9.225066},
+      population: 55524349
+    },
+    island: {
+      center: {lat: -49.450071, lng: 69.464789},
+      population: 65324
+    },
   };
 
   for (var city in citymap) {
     // Add the circle for this city to the map.
     var cityCircle = new google.maps.Circle({
-      strokeColor: '#FF0000',
+      strokeColor: 'rgb(155, 0, 0)',
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      fillColor: 'rgb(84, 12, 4)',
+      fillOpacity: 0.65,
       map: Zombie.map,
       center: citymap[city].center,
       radius: Math.sqrt(citymap[city].population) * 25
