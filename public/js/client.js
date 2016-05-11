@@ -48,13 +48,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-  "airport",
-  "campground",
-  "hospital",
-  "hardware_store",
-  "pharmacy",
-  "doctor",
-  "police"
+"airport",
+"campground",
+"hospital",
+"hardware_store",
+"pharmacy",
+"doctor",
+"police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -310,8 +310,37 @@ Zombie.autocomplete = function() {
   });
 }
 
-Zombie.initialize = function(){
+Zombie.setupSidebar = function() {
+  var trigger = $('.hamburger'),
+  overlay = $('.overlay'),
+  isClosed = false;
+
+  trigger.click(function () {
+    hamburger_cross();      
+  });
+
+  function hamburger_cross() {
+    if (isClosed == true) {          
+      overlay.hide();
+      trigger.removeClass('is-open');
+      trigger.addClass('is-closed');
+      isClosed = false;
+    } else {   
+      overlay.show();
+      trigger.removeClass('is-closed');
+      trigger.addClass('is-open');
+      isClosed = true;
+    }
+  }
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+    $('#wrapper').toggleClass('toggled');
+  });
+}
+
+Zombie.initialize = function() {
   // $('#getUsers').on('click', this.getUsers);
+  this.setupSidebar();
   this.setupGoogleMaps();
   this.setupNavigation();
   this.setupForm();
