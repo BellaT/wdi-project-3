@@ -67,6 +67,7 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
+    backgroundColor: "#545454",
     zoom: 2,
     center: new google.maps.LatLng(28.0339, -15.5678),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -343,7 +344,8 @@ Zombie.setupSidebar = function() {
 }
 
 Zombie.setupModal = function() {
-  $("#story-modal").modal('show').fadeIn(800);
+  $("#story-modal").modal('show')
+    .velocity("fadeIn", { duration: 3000 } );
 }
 
 Zombie.appendVideos = function(data) {
