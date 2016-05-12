@@ -32,11 +32,29 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+
 body,
-html { height: 100%;}
+html {
+  height: 100%;
+  background-color: #999;
+  color: #222222;
+  font-family: zombie;
+}
+
+@font-face {
+  font-family: zombie;
+  src: url(../fonts/BLOOS___.TTF);
+}
+
 .nav .open > a, 
 .nav .open > a:hover, 
-.nav .open > a:focus {background-color: transparent;}
+.nav .open > a:focus {
+  background-color: transparent;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
 
 /*-------------------------------*/
 /*             Videos            */

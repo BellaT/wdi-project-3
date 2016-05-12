@@ -72,7 +72,7 @@ Zombie.setupGoogleMaps = function(){
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: [{"featureType":"all","elementType":"all","stylers":[{"visibility":"simplified"},{"saturation":"-100"},{"invert_lightness":true},{"lightness":"11"},{"gamma":"1.27"}]},{"featureType":"administrative.locality","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"hue":"#ff0000"},{"visibility":"simplified"},{"invert_lightness":true},{"lightness":"-10"},{"gamma":"0.54"},{"saturation":"45"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"simplified"},{"hue":"#ff0000"},{"saturation":"75"},{"lightness":"24"},{"gamma":"0.70"},{"invert_lightness":true}]},{"featureType":"poi.government","elementType":"all","stylers":[{"hue":"#ff0000"},{"visibility":"simplified"},{"invert_lightness":true},{"lightness":"-24"},{"gamma":"0.59"},{"saturation":"59"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"simplified"},{"invert_lightness":true},{"hue":"#ff0000"},{"saturation":"73"},{"lightness":"-24"},{"gamma":"0.59"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"lightness":"-41"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"simplified"},{"hue":"#ff0000"},{"invert_lightness":true},{"saturation":"43"},{"lightness":"-16"},{"gamma":"0.73"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"hue":"#ff0000"},{"saturation":"43"},{"lightness":"-11"},{"gamma":"0.73"},{"invert_lightness":true}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"45"},{"lightness":"53"},{"gamma":"0.67"},{"invert_lightness":true},{"hue":"#ff0000"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"simplified"},{"hue":"#ff0000"},{"saturation":"38"},{"lightness":"-16"},{"gamma":"0.86"}]}],
     mapTypeControl: false,
-    minZoom: 2,
+    minZoom: 2
   }
   this.map = new google.maps.Map(this.canvas, mapOptions);
 }
@@ -94,6 +94,7 @@ Zombie.getTemplate = function(tpl, data) {
       Zombie.setupGoogleMaps();
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
+      Zombie.setupHeatmap();
     }
   });
 }
@@ -159,7 +160,7 @@ Zombie.createMarkers = function(places) {
       url: "../images/" + place.types[0] + ".png",
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
+      anchor: new google.maps.Point(0, 0),
       scaledSize: new google.maps.Size(25, 25)
     };
 
@@ -167,7 +168,8 @@ Zombie.createMarkers = function(places) {
       map: Zombie.map,
       icon: image,
       title: place.name,
-      position: place.geometry.location
+      position: place.geometry.location,
+      animation: google.maps.Animation.DROP
     }); 
 
     var contentString = '<p>' + place.name + '</p>';
@@ -180,7 +182,8 @@ Zombie.createMarkers = function(places) {
 
 Zombie.addInfoWindow = function(marker, contentString) {
   var infoWindow = new google.maps.InfoWindow({
-    content: contentString
+    content: contentString,
+    pixelOffset: new google.maps.Size(-24, 8)
   });
 
   marker.addListener("mouseover", function(){
@@ -220,7 +223,7 @@ Zombie.autocomplete = function() {
         url: place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
+        anchor: new google.maps.Point(0, 0),
         scaledSize: new google.maps.Size(25, 25)
       };
 
@@ -242,51 +245,53 @@ Zombie.autocomplete = function() {
   });
 }
 
-Zombie.createFakeMarkers = function(image, lat, lng){
+Zombie.createFakeMarkers = function(image, lat, lng, timeout){
   lat = parseFloat(lat)
   lng = parseFloat(lng)
- 
+
   var city = { lat: lat, lng: lng };
 
   var contentString = "<img src='" + image + "' class='image'>";
 
-  var marker = new google.maps.Marker({
-    icon: "./images/zombie-outbreak.png",
-    position: city,
-    map: Zombie.map,
-    title: 'New York',
-  });
-
-  marker.addListener('click', function() {
-    if (typeof Zombie.infowindow !== "undefined") Zombie.infowindow.close();
-
-    Zombie.infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 400,
-      maxHeight: 400, 
-      backgroundColor: 'black'
+  window.setTimeout(function(){
+    var marker = new google.maps.Marker({
+      icon: "./images/zombie-outbreak.png",
+      position: city,
+      map: Zombie.map,
+      animation: google.maps.Animation.DROP
     });
 
-    Zombie.infowindow.open(Zombie.map, marker);
+    marker.addListener('click', function() {
+      if (typeof Zombie.infowindow !== "undefined") Zombie.infowindow.close();
 
-    google.maps.event.addListener(Zombie.infowindow, 'domready', function() { 
-      $(".gm-style-iw").hide();
-      var $iwOuter = $(".gm-style-iw");
-      var $x       = $iwOuter.next("div");
-      var $bg      = $iwOuter.prev().find("*");
-
-      $x.css({
-        'border': '7px solid #790000',
-        'border-radius': '100%' 
+      Zombie.infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 400,
+        maxHeight: 400, 
+        backgroundColor: 'black'
       });
 
-      $bg.css({
-        "background-color": "rgba(0,0,0,0.2)",
-        "border-radius": "10px"
+      Zombie.infowindow.open(Zombie.map, marker);
+
+      google.maps.event.addListener(Zombie.infowindow, 'domready', function() { 
+        $(".gm-style-iw").hide();
+        var $iwOuter = $(".gm-style-iw");
+        var $x       = $iwOuter.next("div");
+        var $bg      = $iwOuter.prev().find("*");
+
+        $x.css({
+          'border': '7px solid #790000',
+          'border-radius': '100%' 
+        });
+
+        $bg.css({
+          "background-color": "rgba(0,0,0,0.2)",
+          "border-radius": "10px"
+        });
+        $(".gm-style-iw").fadeIn();
       });
-      $(".gm-style-iw").fadeIn();
-    });
-  }); 
+    }); 
+  }, timeout);
 }
 
 Zombie.loopThroughFakeMarkers = function(markers) {
@@ -296,7 +301,7 @@ Zombie.loopThroughFakeMarkers = function(markers) {
       var image = marker.image;
       var lat   = marker.lat;
       var lng   = marker.lng;
-      Zombie.createFakeMarkers(image, lat, lng);
+      Zombie.createFakeMarkers(image, lat, lng, ((i)*500));
     });
   });
 }
@@ -350,17 +355,17 @@ Zombie.appendVideos = function(data) {
   $(videos).each(function(index) {
     var video = videos[index]
     var content =
-      '<div class="col-md-4">' +
-        '<div class="thumbnail">' +
-          '<div class="embed-responsive embed-responsive-16by9">'+
-            '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' +  video.id.videoId + '" frameborder="0" allowfullscreen></iframe>' +
-            '<div class="caption">' +
-              '<h3>'+ video.snippet.title +'</h3>' +
-              '<p>'+ video.snippet.description +'</p>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
+    '<div class="col-md-4">' +
+    '<div class="thumbnail">' +
+    '<div class="embed-responsive embed-responsive-16by9">'+
+    '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' +  video.id.videoId + '" frameborder="0" allowfullscreen></iframe>' +
+    '<div class="caption">' +
+    '<h3>'+ video.snippet.title +'</h3>' +
+    '<p>'+ video.snippet.description +'</p>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
     $container.append(content);
   });
@@ -369,7 +374,7 @@ Zombie.appendVideos = function(data) {
 Zombie.getVideos = function() {
   $.ajax({
     type: "GET",
-    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=12"
+    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=9"
   }).done(function(data) {
     Zombie.appendVideos(data);
   });
@@ -406,7 +411,7 @@ Zombie.handleFile = function(file) {
           });
         }
       }
-                
+
       Zombie.loadHeatmap();
     }
   });
@@ -445,7 +450,6 @@ Zombie.initialize = function() {
   this.setupNavigation();
   this.setupForm();
   this.loadHome();
-  this.setupHeatmap();
 }
 
 $(function(){
