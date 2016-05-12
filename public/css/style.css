@@ -89,6 +89,7 @@ h1 {
 
 .video-background {
   background: #161616;
+  padding-bottom: 50px;
 }
 
 .text-center {
@@ -110,6 +111,23 @@ h1 {
 
 #tips p {
   padding-left: 40px;
+}
+
+.media-body {
+  color: white;
+}
+
+.media-body p {
+  font-size: 17px;
+}
+
+.media-left.media-top {
+  height: 200px;
+  width: 200px;
+}
+
+.media-object {
+  height: 100%;
 }
 
 /*-------------------------------*/
