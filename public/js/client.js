@@ -310,7 +310,6 @@ Zombie.requestFakeMarkers = function() {
   $.ajax({
     url: "http://localhost:3000/api/markers",
     method: "GET"
-    // dataType: "json"
   }).done(function(data){
     Zombie.loopThroughFakeMarkers(data);
   })
@@ -345,7 +344,7 @@ Zombie.setupSidebar = function() {
 }
 
 Zombie.setupModal = function() {
-  $("#story-modal").modal('show');
+  $("#story-modal").modal('show').fadeIn(800);
 }
 
 Zombie.appendVideos = function(data) {
