@@ -125,7 +125,6 @@ Zombie.setupForm = function() {
 }
 
 Zombie.getLocation = function() {
-  // event.preventDefault();
   var location = $("#pac-input").val();
   
   return $.ajax({
@@ -326,9 +325,7 @@ Zombie.requestFakeMarkers = function() {
 }
 
 Zombie.toggleSidebar = function() {
-  $('[data-toggle="offcanvas"]').click(function() {
-    $('#wrapper').toggleClass('toggled');
-  });
+  $('#wrapper').removeClass('toggled');
 }
 
 Zombie.hamburger_cross = function() {
@@ -346,6 +343,7 @@ Zombie.hamburger_cross = function() {
     trigger.addClass('is-open');
     Zombie.isClosed = true;
   }
+  console.log(Zombie.isClosed)
 }
 
 Zombie.setupSidebar = function() {
@@ -354,8 +352,9 @@ Zombie.setupSidebar = function() {
   trigger.click(function() {
     Zombie.hamburger_cross();      
   });
-
-  Zombie.toggleSidebar();
+  $('[data-toggle="offcanvas"]').click(function() {
+    $('#wrapper').toggleClass('toggled');
+  });
 }
 
 Zombie.setupModal = function() {
