@@ -437,7 +437,20 @@ Zombie.appendVideos = function(data) {
   var $container = $("#videos-container");
 
   $(videos).each(function(index) {
-    var content = '<iframe class="youtube-video" width="560" height="315" src="https://www.youtube.com/embed/' +  videos[index].id.videoId + '" frameborder="0" allowfullscreen></iframe>';
+    var video = videos[index]
+    var content =
+      '<div class="col-md-4">' +
+        '<div class="thumbnail">' +
+          '<div class="embed-responsive embed-responsive-16by9">'+
+            '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' +  video.id.videoId + '" frameborder="0" allowfullscreen></iframe>' +
+            '<div class="caption">' +
+              '<h3>'+ video.snippet.title +'</h3>' +
+              '<p>'+ video.snippet.description +'</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
     $container.append(content);
   });
 }
@@ -445,7 +458,7 @@ Zombie.appendVideos = function(data) {
 Zombie.getVideos = function() {
   $.ajax({
     type: "GET",
-    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=10"
+    url: "https://www.googleapis.com/youtube/v3/search?q=how%20to%20survive%20a%20zombie%20apocalypse&part=snippet&key=AIzaSyBmSnOYNMjiBbTYQQvePVvUApeatpNOXM0&maxResults=12"
   }).done(function(data) {
     Zombie.appendVideos(data);
   });

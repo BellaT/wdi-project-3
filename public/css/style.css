@@ -28,14 +28,6 @@ strong {
   float: left;
 }
 
-#videos {
-  padding-left: 0;
-}
-
-.youtube-video {
-  margin: 20px auto;
-}
-
 body {
   position: relative;
   overflow-x: hidden;
@@ -45,6 +37,14 @@ html { height: 100%;}
 .nav .open > a, 
 .nav .open > a:hover, 
 .nav .open > a:focus {background-color: transparent;}
+
+/*-------------------------------*/
+/*             Videos            */
+/*-------------------------------*/
+
+#videos {
+  padding-left: 0;
+}
 
 /*-------------------------------*/
 /*           Wrappers            */
@@ -353,14 +353,14 @@ html { height: 100%;}
 }
 
 div.info {
-    position: absolute;
-    z-index: 999;
-    width: 200px;
-    height: 100px;
-    display: none;
-    background-color: #fff;
-    border: 3px solid #ebebeb;
-    padding: 10px;
+  position: absolute;
+  z-index: 999;
+  width: 200px;
+  height: 100px;
+  display: none;
+  background-color: #fff;
+  border: 3px solid #ebebeb;
+  padding: 10px;
 }
 
 .black {
