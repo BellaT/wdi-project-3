@@ -352,7 +352,6 @@ Zombie.setupSidebar = function() {
   trigger.click(function() {
     Zombie.hamburger_cross();      
   });
-
   Zombie.toggleSidebar();
 }
 
