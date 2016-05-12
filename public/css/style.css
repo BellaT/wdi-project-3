@@ -75,11 +75,16 @@ h1 {
 }
 
 .video-background {
-  background: black;
+  background: #161616;
+}
+
+.text-center {
+  color: rgb(84,12,4);
 }
 
 .thumbnail {
-  background: black;
+  background: #161616;
+  border: 1px solid #161616;
 }
 
 /*-------------------------------*/

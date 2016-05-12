@@ -522,5 +522,5 @@ $(function(){
   Zombie.setupStaticTv();
   window.setTimeout(function() {
     Zombie.initialize();
-  }, 2000)
+  }, 500)
 })
