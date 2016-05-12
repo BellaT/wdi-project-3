@@ -386,3 +386,10 @@ div.info {
     background-color: rgba(250,250,250,.8);
     z-index: 1;
     }*/
+
+#player {
+  display: inline-block;
+  position: absolute; 
+  color: rgb(84,12,4);
+  bottom:0;
+}
