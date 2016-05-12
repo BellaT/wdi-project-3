@@ -457,7 +457,13 @@ Zombie.setupAudio = function() {
   $player.on('click', Zombie.toggleSound);
 }
 
+Zombie.playStaticAudio = function() {
+  var staticAudio = document.getElementById("staticAudio");
+  staticAudio.play();
+}
+
 Zombie.setupStaticTv = function() {
+  this.playStaticAudio();
   var canvas = document.getElementById('canvas'),
   ctx = canvas.getContext('2d');
 
@@ -510,5 +516,5 @@ $(function(){
   Zombie.setupStaticTv();
   window.setTimeout(function() {
     Zombie.initialize();
-  }, 5000)
+  }, 2000)
 })
