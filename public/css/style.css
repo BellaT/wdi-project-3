@@ -74,6 +74,10 @@ h1 {
   padding-left: 0;
 }
 
+#videos p {
+  padding-left: 40px;
+}
+
 .video-background {
   background: #161616;
 }
@@ -85,6 +89,18 @@ h1 {
 .thumbnail {
   background: #161616;
   border: 1px solid #161616;
+}
+
+/*-------------------------------*/
+/*           Tips                */
+/*-------------------------------*/
+
+#tips {
+  padding: 0;
+}
+
+#tips p {
+  padding-left: 40px;
 }
 
 /*-------------------------------*/

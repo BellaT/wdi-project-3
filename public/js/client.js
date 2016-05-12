@@ -108,6 +108,7 @@ Zombie.getTemplate = function(tpl, data) {
 Zombie.changePage = function() {
   event.preventDefault();
   var tpl = $(this).data("template");
+  console.log(tpl)
   if (tpl) Zombie.getTemplate(tpl, null);
   Zombie.hamburger_cross();
   Zombie.toggleSidebar();
@@ -116,6 +117,7 @@ Zombie.changePage = function() {
 Zombie.setupNavigation = function() {
   $("#videos").on('click', this.changePage);
   $("#home").on('click', this.changePage);
+  $("#tips").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
