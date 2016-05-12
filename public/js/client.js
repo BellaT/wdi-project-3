@@ -5,6 +5,7 @@ Zombie.pointarray
 Zombie.heatmap;
 Zombie.csv = [];
 Zombie.infowindow;
+Zombie.isClosed = false;
 Zombie.loaded = false;
 
 Zombie.setRequestHeader = function(xhr, settings) {
@@ -108,6 +109,8 @@ Zombie.changePage = function() {
   event.preventDefault();
   var tpl = $(this).data("template");
   if (tpl) Zombie.getTemplate(tpl, null);
+  Zombie.hamburger_cross();
+  Zombie.toggleSidebar();
 }
 
 Zombie.setupNavigation = function() {
@@ -320,37 +323,42 @@ Zombie.requestFakeMarkers = function() {
   })
 }
 
-Zombie.setupSidebar = function() {
-  var trigger = $('.hamburger');
-  var overlay = $('.overlay');
-  var isClosed = false;
-
-  trigger.click(function() {
-    hamburger_cross();      
-  });
-
-  function hamburger_cross() {
-    if (isClosed == true) {          
-      overlay.hide();
-      trigger.removeClass('is-open');
-      trigger.addClass('is-closed');
-      isClosed = false;
-    } else {   
-      overlay.show();
-      trigger.removeClass('is-closed');
-      trigger.addClass('is-open');
-      isClosed = true;
-    }
-  }
-  
+Zombie.toggleSidebar = function() {
   $('[data-toggle="offcanvas"]').click(function() {
     $('#wrapper').toggleClass('toggled');
   });
 }
 
+Zombie.hamburger_cross = function() {
+  var trigger = $('.hamburger');
+  var overlay = $('.overlay');
+
+  if (Zombie.isClosed == true) {          
+    overlay.hide();
+    trigger.removeClass('is-open');
+    trigger.addClass('is-closed');
+    Zombie.isClosed = false;
+  } else {   
+    overlay.show();
+    trigger.removeClass('is-closed');
+    trigger.addClass('is-open');
+    Zombie.isClosed = true;
+  }
+}
+
+Zombie.setupSidebar = function() {
+  var trigger = $('.hamburger');
+
+  trigger.click(function() {
+    Zombie.hamburger_cross();      
+  });
+
+  Zombie.toggleSidebar();
+}
+
 Zombie.setupModal = function() {
   $("#story-modal").modal('show')
-    .velocity("fadeIn", { duration: 3000 } );
+  .velocity("fadeIn", { duration: 3000 } );
 }
 
 Zombie.appendVideos = function(data) {
@@ -457,7 +465,13 @@ Zombie.setupAudio = function() {
   $player.on('click', Zombie.toggleSound);
 }
 
+Zombie.playStaticAudio = function() {
+  var staticAudio = document.getElementById("staticAudio");
+  staticAudio.play();
+}
+
 Zombie.setupStaticTv = function() {
+  this.playStaticAudio();
   var canvas = document.getElementById('canvas'),
   ctx = canvas.getContext('2d');
 
@@ -485,7 +499,6 @@ Zombie.setupStaticTv = function() {
   }
 
   var toggle = true;
-
   // added toggle to get 30 FPS instead of 60 FPS
   (function loop() {
     toggle = !toggle;
