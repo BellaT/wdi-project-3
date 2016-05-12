@@ -1,5 +1,9 @@
 var Zombie = Zombie || {}
 
+Zombie.map;
+Zombie.pointarray
+Zombie.heatmap;
+Zombie.csv = [];
 Zombie.infowindow;
 
 Zombie.setRequestHeader = function(xhr, settings) {
@@ -73,102 +77,102 @@ Zombie.setupGoogleMaps = function(){
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
 
-  var citymap = {
-    london: {
-      center: {lat: 51.500152, lng: -0.126236},
-      population: 1549123
-    },
-    chicago: {
-      center: {lat: 41.878, lng: -87.629},
-      population: 2714856
-    },
-    newyork: {
-      center: {lat: 40.714, lng: -74.005},
-      population: 8405837
-    },
-    losangeles: {
-      center: {lat: 34.052, lng: -118.243},
-      population: 3857799
-    },
-    vancouver: {
-      center: {lat: 49.25, lng: -123.1},
-      population: 603502
-    },
-    Mumbai: {
-      center: {lat: 19.0760, lng: 72.8777},
-      population: 13467235
-    },
-    Cairo: {
-      center: {lat: 30.0444, lng: 31.2357},
-      population: 158592355
-    },
-    Patient_0: {
-      center: {lat: -14.2350, lng: -51.9253},
-      population: 1532453452
-    },
-    Wuhan: {
-      center: {lat: 30.3054, lng: 113.4112},
-      population: 234090983
-    },
-    Argentina: {
-      center: {lat: -30.2350, lng: -60.9253},
-      population: 153245345.5
-    },
-    Paris: {
-      center: {lat: 48.8566, lng: 2.3522},
-      population: 5532434
-    },
-    Milan: {
-      center: {lat: 45.460053, lng: 9.225066},
-      population: 55524349
-    },
-    island: {
-      center: {lat: -49.450071, lng: 69.464789},
-      population: 65324
-    },
-    MexicoCity: {
-      center: {lat: 20.6345, lng: -102.5528},
-      population: 65324798,
-    },
-    Melbourne: {
-      center: {lat: -37.671812, lng: 145.036239},
-      population: 95324798,
-    },
-    PortElizabeth: {
-      center: {lat: -28.765319, lng: 30.493061},
-      population: 9532417,
-    },
-    Ntoto: {
-      center: {lat: -1.880540, lng: 28.574132},
-      population: 199999899,
-    },
-    Ghana: {
-      center: {lat: 6.289979, lng: 0.820303},
-      population: 84930387,
-    },
-    Barcelona: {
-      center: {lat: 41.408675, lng: 2.115806},
-      population: 19969501,
-    },
-    Palmyra: {
-      center: {lat: 34.186014, lng: 39.019998},
-      population: 9532479,
-    },
-  };
+  // var citymap = {
+  //   london: {
+  //     center: {lat: 51.500152, lng: -0.126236},
+  //     population: 1549123
+  //   },
+  //   chicago: {
+  //     center: {lat: 41.878, lng: -87.629},
+  //     population: 2714856
+  //   },
+  //   newyork: {
+  //     center: {lat: 40.714, lng: -74.005},
+  //     population: 8405837
+  //   },
+  //   losangeles: {
+  //     center: {lat: 34.052, lng: -118.243},
+  //     population: 3857799
+  //   },
+  //   vancouver: {
+  //     center: {lat: 49.25, lng: -123.1},
+  //     population: 603502
+  //   },
+  //   Mumbai: {
+  //     center: {lat: 19.0760, lng: 72.8777},
+  //     population: 13467235
+  //   },
+  //   Cairo: {
+  //     center: {lat: 30.0444, lng: 31.2357},
+  //     population: 158592355
+  //   },
+  //   Patient_0: {
+  //     center: {lat: -14.2350, lng: -51.9253},
+  //     population: 1532453452
+  //   },
+  //   Wuhan: {
+  //     center: {lat: 30.3054, lng: 113.4112},
+  //     population: 234090983
+  //   },
+  //   Argentina: {
+  //     center: {lat: -30.2350, lng: -60.9253},
+  //     population: 153245345.5
+  //   },
+  //   Paris: {
+  //     center: {lat: 48.8566, lng: 2.3522},
+  //     population: 5532434
+  //   },
+  //   Milan: {
+  //     center: {lat: 45.460053, lng: 9.225066},
+  //     population: 55524349
+  //   },
+  //   island: {
+  //     center: {lat: -49.450071, lng: 69.464789},
+  //     population: 65324
+  //   },
+  //   MexicoCity: {
+  //     center: {lat: 20.6345, lng: -102.5528},
+  //     population: 65324798,
+  //   },
+  //   Melbourne: {
+  //     center: {lat: -37.671812, lng: 145.036239},
+  //     population: 95324798,
+  //   },
+  //   PortElizabeth: {
+  //     center: {lat: -28.765319, lng: 30.493061},
+  //     population: 9532417,
+  //   },
+  //   Ntoto: {
+  //     center: {lat: -1.880540, lng: 28.574132},
+  //     population: 199999899,
+  //   },
+  //   Ghana: {
+  //     center: {lat: 6.289979, lng: 0.820303},
+  //     population: 84930387,
+  //   },
+  //   Barcelona: {
+  //     center: {lat: 41.408675, lng: 2.115806},
+  //     population: 19969501,
+  //   },
+  //   Palmyra: {
+  //     center: {lat: 34.186014, lng: 39.019998},
+  //     population: 9532479,
+  //   },
+  // };
 
-  for (var city in citymap) {
-    var cityCircle = new google.maps.Circle({
-      strokeColor: 'rgb(155, 0, 0)',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: 'rgb(84, 12, 4)',
-      fillOpacity: 0.65,
-      map: Zombie.map,
-      center: citymap[city].center,
-      radius: Math.sqrt(citymap[city].population) * 25,
-      icon: "/images/zombie-outbreak.png",
-    });
-  }
+  // for (var city in citymap) {
+  //   var cityCircle = new google.maps.Circle({
+  //     strokeColor: 'rgb(155, 0, 0)',
+  //     strokeOpacity: 0.8,
+  //     strokeWeight: 2,
+  //     fillColor: 'rgb(84, 12, 4)',
+  //     fillOpacity: 0.65,
+  //     map: Zombie.map,
+  //     center: citymap[city].center,
+  //     radius: Math.sqrt(citymap[city].population) * 25,
+  //     icon: "/images/zombie-outbreak.png",
+  //   });
+  // }
 }
 
 Zombie.getTemplate = function(tpl, data) {
@@ -333,27 +337,12 @@ Zombie.autocomplete = function() {
 
 Zombie.createFakeMarkers = function(image, lat, lng){
   lat = parseFloat(lat)
-<<<<<<< HEAD
   lng = parseFloat(lng)
-=======
-  lng = parseFloat(lng) 
->>>>>>> 8da4395541f727202610f275605ea917b7ce609c
  
   var city = { lat: lat, lng: lng };
 
   var contentString = "<img src='" + image + "' class='image'>";
 
-<<<<<<< HEAD
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString,
-    maxWidth: 400,
-    maxHeight: 400, 
-    backgroundColor: 'black',
-    positon: 'relative'
-  });
-
-=======
->>>>>>> 8da4395541f727202610f275605ea917b7ce609c
   var marker = new google.maps.Marker({
     icon: "./images/zombie-outbreak.png",
     position: city,
@@ -376,18 +365,12 @@ Zombie.createFakeMarkers = function(image, lat, lng){
     google.maps.event.addListener(Zombie.infowindow, 'domready', function() { 
       $(".gm-style-iw").hide();
       var $iwOuter = $(".gm-style-iw");
-<<<<<<< HEAD
-      $iwOuter.next("div").css({
-       'border': '7px solid #790000',
-       'border-radius': '100%', 
-=======
       var $x       = $iwOuter.next("div");
       var $bg      = $iwOuter.prev().find("*");
 
       $x.css({
         'border': '7px solid #790000',
         'border-radius': '100%' 
->>>>>>> 8da4395541f727202610f275605ea917b7ce609c
       });
 
       $bg.css({
@@ -472,6 +455,66 @@ Zombie.getVideos = function() {
   });
 }
 
+Zombie.handleFile = function(file) {
+  Papa.parse(file, {
+    header: true,
+    dynamicTyping: true,
+    complete: function(results) {
+      Zombie.csv = [];
+
+      if(results.meta.fields.indexOf("weight") == -1) {
+        for(idx in results["data"]) {
+          var row = results["data"][idx];
+          Zombie.csv.push(new google.maps.LatLng(row["lat"], row["lon"]))
+        }
+      } else {
+        var max = results["data"][0]["weight"];
+
+        for(idx in results["data"]) {
+          var row = results["data"][idx];
+          
+          max = Math.max(max, row["weight"]);
+
+          Zombie.csv.push({
+            location: new google.maps.LatLng(row["lat"], row["lon"]),
+            weight: row["weight"]
+          });
+        }
+      }
+                
+      Zombie.loadHeatmap();
+    }
+  });
+}
+
+Zombie.loadHeatmap = function() {
+  var pointArray = new google.maps.MVCArray(Zombie.csv);
+
+  // Clear the heatmap
+  if (Zombie.heatmap) Zombie.heatmap.setMap(null);
+  
+  // Create the heatmap
+  Zombie.heatmap = new google.maps.visualization.HeatmapLayer({
+    data: pointArray,
+    // radius: 50, 
+    // opacity: 1,  
+    // maxIntensity: 1253000
+    radius: 1, 
+    opacity: 1,  
+    maxIntensity: 125300
+  });
+  
+  Zombie.heatmap.setMap(Zombie.map);
+}
+
+Zombie.setupHeatmap = function(){
+  return $.ajax({
+    type: "GET",
+    url: "/data/population.csv",
+    dataType: "text"
+  }).done(Zombie.handleFile)  
+}
+
 Zombie.initialize = function() {
   this.setupSidebar();
   this.setupNavigation();
@@ -480,6 +523,7 @@ Zombie.initialize = function() {
   this.setupGoogleMaps();
   this.autocomplete();
   this.requestFakeMarkers();
+  this.setupHeatmap();
 }
 
 $(function(){
