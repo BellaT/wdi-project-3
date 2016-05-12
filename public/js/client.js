@@ -54,13 +54,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-  "airport",
-  "campground",
-  "hospital",
-  "hardware_store",
-  "pharmacy",
-  "doctor",
-  "police"
+"airport",
+"campground",
+"hospital",
+"hardware_store",
+"pharmacy",
+"doctor",
+"police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -444,10 +444,24 @@ Zombie.setupHeatmap = function(){
   }).done(Zombie.handleFile)
 }
 
+Zombie.toggleSound = function() {
+  var audioElem = document.getElementById('audio');
+  if (audioElem.paused)
+    audioElem.play();
+  else
+    audioElem.pause();
+}
+
+Zombie.setupAudio = function() {
+  var $player = $('#player');
+  $player.on('click', Zombie.toggleSound);
+}
+
 Zombie.initialize = function() {
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
+  this.setupAudio();
   this.loadHome();
 }
 
