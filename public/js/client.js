@@ -381,7 +381,6 @@ Zombie.getVideos = function() {
   });
 }
 
-
 Zombie.loadHome = function() {
   this.getTemplate("home", null);
 }
