@@ -7,6 +7,8 @@ Zombie.csv = [];
 Zombie.infowindow;
 Zombie.isClosed = false;
 Zombie.loaded = false;
+Zombie.number = 5438784;
+
 
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
@@ -98,6 +100,7 @@ Zombie.getTemplate = function(tpl, data) {
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
+      Zombie.getDate();
       if (!Zombie.loaded) {
         Zombie.setupModal();
         Zombie.loaded = true;
@@ -119,6 +122,7 @@ Zombie.setupNavigation = function() {
   $("#videos").on('click', this.changePage);
   $("#home").on('click', this.changePage);
   $("#tips").on('click', this.changePage);
+  $("#shopping").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
@@ -515,12 +519,24 @@ Zombie.showMarquee = function() {
   $("marquee").show();
 }
 
+Zombie.getDate = function() {
+  var today = new Date();
+  document.getElementById('time').innerHTML = today;
+}
+
+Zombie.count = function() {
+  document.getElementById('counter').innerHTML = Zombie.number;
+  Zombie.number++; 
+}
+
 Zombie.initialize = function() {
   this.loadHome();
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
+
+  setInterval('Zombie.count()', 80);
 }
 
 $(function(){
