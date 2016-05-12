@@ -93,6 +93,7 @@ Zombie.getTemplate = function(tpl, data) {
     if (tpl == "videos") {
       Zombie.getVideos();
     } else if (tpl == "home") {
+      Zombie.showMarquee();
       Zombie.setupGoogleMaps();
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
@@ -520,7 +521,6 @@ Zombie.initialize = function() {
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-  this.showMarquee();
 }
 
 $(function(){
