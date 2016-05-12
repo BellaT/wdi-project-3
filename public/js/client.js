@@ -67,6 +67,7 @@ Zombie.setupGoogleMaps = function(){
   this.canvas = document.getElementById('map-canvas');
 
   var mapOptions = {
+    backgroundColor: "#545454",
     zoom: 2,
     center: new google.maps.LatLng(28.0339, -15.5678),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -76,103 +77,6 @@ Zombie.setupGoogleMaps = function(){
   }
 
   this.map = new google.maps.Map(this.canvas, mapOptions);
-
-  // var citymap = {
-  //   london: {
-  //     center: {lat: 51.500152, lng: -0.126236},
-  //     population: 1549123
-  //   },
-  //   chicago: {
-  //     center: {lat: 41.878, lng: -87.629},
-  //     population: 2714856
-  //   },
-  //   newyork: {
-  //     center: {lat: 40.714, lng: -74.005},
-  //     population: 8405837
-  //   },
-  //   losangeles: {
-  //     center: {lat: 34.052, lng: -118.243},
-  //     population: 3857799
-  //   },
-  //   vancouver: {
-  //     center: {lat: 49.25, lng: -123.1},
-  //     population: 603502
-  //   },
-  //   Mumbai: {
-  //     center: {lat: 19.0760, lng: 72.8777},
-  //     population: 13467235
-  //   },
-  //   Cairo: {
-  //     center: {lat: 30.0444, lng: 31.2357},
-  //     population: 158592355
-  //   },
-  //   Patient_0: {
-  //     center: {lat: -14.2350, lng: -51.9253},
-  //     population: 1532453452
-  //   },
-  //   Wuhan: {
-  //     center: {lat: 30.3054, lng: 113.4112},
-  //     population: 234090983
-  //   },
-  //   Argentina: {
-  //     center: {lat: -30.2350, lng: -60.9253},
-  //     population: 153245345.5
-  //   },
-  //   Paris: {
-  //     center: {lat: 48.8566, lng: 2.3522},
-  //     population: 5532434
-  //   },
-  //   Milan: {
-  //     center: {lat: 45.460053, lng: 9.225066},
-  //     population: 55524349
-  //   },
-  //   island: {
-  //     center: {lat: -49.450071, lng: 69.464789},
-  //     population: 65324
-  //   },
-  //   MexicoCity: {
-  //     center: {lat: 20.6345, lng: -102.5528},
-  //     population: 65324798,
-  //   },
-  //   Melbourne: {
-  //     center: {lat: -37.671812, lng: 145.036239},
-  //     population: 95324798,
-  //   },
-  //   PortElizabeth: {
-  //     center: {lat: -28.765319, lng: 30.493061},
-  //     population: 9532417,
-  //   },
-  //   Ntoto: {
-  //     center: {lat: -1.880540, lng: 28.574132},
-  //     population: 199999899,
-  //   },
-  //   Ghana: {
-  //     center: {lat: 6.289979, lng: 0.820303},
-  //     population: 84930387,
-  //   },
-  //   Barcelona: {
-  //     center: {lat: 41.408675, lng: 2.115806},
-  //     population: 19969501,
-  //   },
-  //   Palmyra: {
-  //     center: {lat: 34.186014, lng: 39.019998},
-  //     population: 9532479,
-  //   },
-  // };
-
-  // for (var city in citymap) {
-  //   var cityCircle = new google.maps.Circle({
-  //     strokeColor: 'rgb(155, 0, 0)',
-  //     strokeOpacity: 0.8,
-  //     strokeWeight: 2,
-  //     fillColor: 'rgb(84, 12, 4)',
-  //     fillOpacity: 0.65,
-  //     map: Zombie.map,
-  //     center: citymap[city].center,
-  //     radius: Math.sqrt(citymap[city].population) * 25,
-  //     icon: "/images/zombie-outbreak.png",
-  //   });
-  // }
 }
 
 Zombie.getTemplate = function(tpl, data) {
@@ -273,7 +177,9 @@ Zombie.createMarkers = function(places) {
 
 Zombie.addInfoWindow = function(marker, contentString) {
   var infoWindow = new google.maps.InfoWindow({
-    content: contentString
+    content: contentString,
+    pixelOffset: new google.maps.Size(0, 200),
+    alignBottom: true
   });
 
   marker.addListener("mouseover", function(){
@@ -432,7 +338,8 @@ Zombie.setupSidebar = function() {
 }
 
 Zombie.setupModal = function() {
-  $("#story-modal").modal('show').fadeIn(800);
+  $("#story-modal").modal('show')
+    .velocity("fadeIn", { duration: 3000 } );
 }
 
 Zombie.appendVideos = function(data) {

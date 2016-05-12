@@ -10,11 +10,14 @@ html, body {
 
 #story-modal {
   margin-top: 200px;
+
 }
 
 .modal-content {
   padding: 20px;
   border-radius: none;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
 }
 
 strong {
