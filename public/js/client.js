@@ -5,6 +5,7 @@ Zombie.pointarray
 Zombie.heatmap;
 Zombie.csv = [];
 Zombie.infowindow;
+Zombie.loaded = false;
 
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
@@ -91,11 +92,14 @@ Zombie.getTemplate = function(tpl, data) {
     if (tpl == "videos") {
       Zombie.getVideos();
     } else if (tpl == "home") {
-      Zombie.setupModal();
       Zombie.setupGoogleMaps();
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
+      if (Zombie.loaded == false) {
+        Zombie.setupModal();
+        Zombie.loaded = true;
+      }
     }
   });
 }
@@ -391,7 +395,6 @@ Zombie.handleFile = function(file) {
     dynamicTyping: true,
     complete: function(results) {
       Zombie.csv = [];
-
       if(results.meta.fields.indexOf("weight") == -1) {
         for(idx in results["data"]) {
           var row = results["data"][idx];
@@ -399,19 +402,15 @@ Zombie.handleFile = function(file) {
         }
       } else {
         var max = results["data"][0]["weight"];
-
         for(idx in results["data"]) {
           var row = results["data"][idx];
-          
           max = Math.max(max, row["weight"]);
-
           Zombie.csv.push({
             location: new google.maps.LatLng(row["lat"], row["lon"]),
             weight: row["weight"]
           });
         }
       }
-
       Zombie.loadHeatmap();
     }
   });
@@ -458,14 +457,58 @@ Zombie.setupAudio = function() {
   $player.on('click', Zombie.toggleSound);
 }
 
+Zombie.setupStaticTv = function() {
+  var canvas = document.getElementById('canvas'),
+  ctx = canvas.getContext('2d');
+
+  // closer to analouge appearance
+  canvas.width = canvas.height = 360;
+
+  function resize() {
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  resize();
+  window.onresize = resize;
+
+  function noise(ctx) {
+
+    var width = ctx.canvas.width;
+    var height = ctx.canvas.height;
+    var idata = ctx.createImageData(width, height);
+    var buffer32 = new Uint32Array(idata.data.buffer);
+    
+
+    for(var i = 0; i < buffer32.length; i++) 
+      if (Math.random() < 0.5) buffer32[i] = 0xff000000;
+    ctx.putImageData(idata, 0, 0);
+  }
+
+  var toggle = true;
+
+  // added toggle to get 30 FPS instead of 60 FPS
+  (function loop() {
+    toggle = !toggle;
+    if (toggle) {
+      requestAnimationFrame(loop);
+      return;
+    }
+    noise(ctx);
+    requestAnimationFrame(loop);
+  })();
+}
+
 Zombie.initialize = function() {
+  this.loadHome();
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-  this.loadHome();
 }
 
 $(function(){
-  Zombie.initialize();
+  Zombie.setupStaticTv();
+  window.setTimeout(function() {
+    Zombie.initialize();
+  }, 5000)
 })
