@@ -123,6 +123,7 @@ Zombie.setupNavigation = function() {
   $("#home").on('click', this.changePage);
   $("#tips").on('click', this.changePage);
   $("#shopping").on('click', this.changePage);
+  $("#infections").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
