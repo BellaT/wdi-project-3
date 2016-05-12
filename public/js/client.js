@@ -5,6 +5,7 @@ Zombie.pointarray
 Zombie.heatmap;
 Zombie.csv = [];
 Zombie.infowindow;
+Zombie.loaded = false;
 
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
@@ -95,6 +96,10 @@ Zombie.getTemplate = function(tpl, data) {
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
+      if (Zombie.loaded == false) {
+        Zombie.setupModal();
+        Zombie.loaded = true;
+      }
     }
   });
 }
@@ -383,7 +388,6 @@ Zombie.getVideos = function() {
 
 Zombie.loadHome = function() {
   this.getTemplate("home", null);
-  this.setupStaticTv();
 }
 
 Zombie.handleFile = function(file) {
@@ -392,7 +396,6 @@ Zombie.handleFile = function(file) {
     dynamicTyping: true,
     complete: function(results) {
       Zombie.csv = [];
-
       if(results.meta.fields.indexOf("weight") == -1) {
         for(idx in results["data"]) {
           var row = results["data"][idx];
@@ -400,19 +403,15 @@ Zombie.handleFile = function(file) {
         }
       } else {
         var max = results["data"][0]["weight"];
-
         for(idx in results["data"]) {
           var row = results["data"][idx];
-          
           max = Math.max(max, row["weight"]);
-
           Zombie.csv.push({
             location: new google.maps.LatLng(row["lat"], row["lon"]),
             weight: row["weight"]
           });
         }
       }
-
       Zombie.loadHeatmap();
     }
   });
@@ -464,7 +463,7 @@ Zombie.setupStaticTv = function() {
   ctx = canvas.getContext('2d');
 
   // closer to analouge appearance
-  canvas.width = canvas.height = 256;
+  canvas.width = canvas.height = 360;
 
   function resize() {
     canvas.style.width = window.innerWidth + 'px';
@@ -475,16 +474,14 @@ Zombie.setupStaticTv = function() {
 
   function noise(ctx) {
 
-    var w = ctx.canvas.width,
-    h = ctx.canvas.height,
-    idata = ctx.createImageData(w, h),
-    buffer32 = new Uint32Array(idata.data.buffer),
-    len = buffer32.length,
-    i = 0;
+    var width = ctx.canvas.width;
+    var height = ctx.canvas.height;
+    var idata = ctx.createImageData(width, height);
+    var buffer32 = new Uint32Array(idata.data.buffer);
+    
 
-    for(; i < len;i++)
+    for(var i = 0; i < buffer32.length; i++) 
       if (Math.random() < 0.5) buffer32[i] = 0xff000000;
-
     ctx.putImageData(idata, 0, 0);
   }
 
@@ -508,9 +505,11 @@ Zombie.initialize = function() {
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-  // this.setupModal();
 }
 
 $(function(){
-  Zombie.initialize();
+  Zombie.setupStaticTv();
+  window.setTimeout(function() {
+    Zombie.initialize();
+  }, 5000)
 })
