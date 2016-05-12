@@ -510,5 +510,5 @@ $(function(){
   Zombie.setupStaticTv();
   window.setTimeout(function() {
     Zombie.initialize();
-  }, 5000)
+  }, 2000)
 })
