@@ -8,6 +8,7 @@ Zombie.infowindow;
 Zombie.isClosed = false;
 Zombie.loaded = false;
 
+
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
   if (token) return xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -521,6 +522,19 @@ Zombie.initialize = function() {
   this.setupForm();
   this.setupAudio();
   this.showMarquee();
+}
+
+var number=5438784; 
+window.onload=function(){
+  document.getElementById('counter').innerHTML=number;
+  setInterval('count()',80);
+  var today = new Date();
+  document.getElementById('time').innerHTML=today;
+}
+
+function count() {
+  number++; 
+  document.getElementById('counter').innerHTML=number;
 }
 
 $(function(){
