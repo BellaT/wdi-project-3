@@ -7,6 +7,7 @@ Zombie.csv = [];
 Zombie.infowindow;
 Zombie.isClosed = false;
 Zombie.loaded = false;
+Zombie.number = 5438784;
 
 
 Zombie.setRequestHeader = function(xhr, settings) {
@@ -94,10 +95,12 @@ Zombie.getTemplate = function(tpl, data) {
     if (tpl == "videos") {
       Zombie.getVideos();
     } else if (tpl == "home") {
+      Zombie.showMarquee();
       Zombie.setupGoogleMaps();
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
+      Zombie.getDate();
       if (!Zombie.loaded) {
         Zombie.setupModal();
         Zombie.loaded = true;
@@ -516,26 +519,24 @@ Zombie.showMarquee = function() {
   $("marquee").show();
 }
 
+Zombie.getDate = function() {
+  var today = new Date();
+  document.getElementById('time').innerHTML = today;
+}
+
+Zombie.count = function() {
+  document.getElementById('counter').innerHTML = Zombie.number;
+  Zombie.number++; 
+}
+
 Zombie.initialize = function() {
   this.loadHome();
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-  this.showMarquee();
-}
 
-var number=5438784; 
-window.onload=function(){
-  document.getElementById('counter').innerHTML=number;
-  setInterval('count()',400);
-  var today = new Date();
-  document.getElementById('time').innerHTML=today;
-}
-
-function count() {
-  number++; 
-  document.getElementById('counter').innerHTML=number;
+  setInterval('Zombie.count()', 80);
 }
 
 $(function(){
