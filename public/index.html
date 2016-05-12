@@ -24,8 +24,15 @@
               BRAAINS!
             </a>
           </li>
+          <li>
+            <a href="/home" data-template="home" id="home">
+              <strong><img src="./images/home.png">Home</strong>
+            </a>
+          </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><img src="./images/regroup.png">Key</strong></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <strong><img src="./images/regroup.png">Key</strong>
+            </a>
             <ul class="dropdown-menu" role="menu">
               <li class="dropdown-header">
                 <img class="icons" src="./images/firstaid.png">
@@ -69,7 +76,9 @@
               </li>
             </ul>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><img src="./images/information.png">Info</strong></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <strong><img src="./images/information.png">Info</strong>
+              </a>
             <ul class="dropdown-menu" role="menu">
               <li class="dropdown-header">
                 <a href="/videos" data-template="videos" id="videos">
@@ -83,7 +92,36 @@
               </li>
             </ul>
           </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><img src="./images/dollarsign.png">Shop</strong></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">
+                <a href="http://www.gunsmokeguns.com/home.html" target="_blank">Guns</a>
+              </li>
+              <li class="dropdown-header">
+                <a href="https://www.theknightshop.com/blunt-and-sharp-swords" target="_blank">Swords</a>
+              </li>
+              <li class="dropdown-header">
+                <a href="http://www.partridges.co.uk/?sessionid=1463045173e489a6868deebb54c986ba1b2e9273f1" target="_blank">Food</a>
+              </li>
+              <li class="dropdown-header">
+                <a href="http://now-here-this.timeout.com/2015/05/28/a-pop-up-bar-serving-only-tap-water-is-coming-to-shoreditch/" target="_blank">Water</a>
+              </li>
+              <li class="dropdown-header">
+                <a href="http://www.thebushcraftstore.co.uk/survival-kits-273-c.asp" target="_blank">Survival Gear</a>
+              </li>
+              <li class="dropdown-header">
+                <a href="http://bubbleandbounce.co.uk/" target="_blank">Bouncy Castles</a>
+              </li>
+            </ul>
+          </li>
         </ul>
+        <button id="player" type="button">
+          Play / Pause
+        </button>
+        <audio id="audio">
+          <source src="./images/28days.mp3" type="audio/mpeg">
+        </audio>
       </nav>
     <!-- Page Content -->
     <!-- <div id="page-content-wrapper"> -->
@@ -96,16 +134,7 @@
   <!-- /#wrapper -->
 </header>
 <main>
-  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="story-modal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-    </div>
-  </div>
-  <div id="myinfo" class="info"><p>I am a div on top of a google map .. </p></div>
-  <div id="map-canvas"></div>
-  <input type="text" class="form-control" id="pac-input" placeholder="Enter a location">
+  
 </main>
 </body>
 </html>

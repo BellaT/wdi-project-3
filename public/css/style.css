@@ -31,23 +31,41 @@ strong {
   float: left;
 }
 
-#videos {
-  padding-left: 0;
-}
-
-.youtube-video {
-  margin: 20px auto;
-}
-
 body {
   position: relative;
   overflow-x: hidden;
 }
+
 body,
-html { height: 100%;}
+html {
+  height: 100%;
+  background-color: #999;
+  color: #222222;
+  font-family: zombie;
+}
+
+@font-face {
+  font-family: zombie;
+  src: url(../fonts/BLOOS___.TTF);
+}
+
 .nav .open > a, 
 .nav .open > a:hover, 
-.nav .open > a:focus {background-color: transparent;}
+.nav .open > a:focus {
+  background-color: transparent;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+/*-------------------------------*/
+/*             Videos            */
+/*-------------------------------*/
+
+#videos {
+  padding-left: 0;
+}
 
 /*-------------------------------*/
 /*           Wrappers            */
@@ -359,14 +377,14 @@ html { height: 100%;}
 }
 
 div.info {
-    position: absolute;
-    z-index: 999;
-    width: 200px;
-    height: 100px;
-    display: none;
-    background-color: #fff;
-    border: 3px solid #ebebeb;
-    padding: 10px;
+  position: absolute;
+  z-index: 999;
+  width: 200px;
+  height: 100px;
+  display: none;
+  background-color: #fff;
+  border: 3px solid #ebebeb;
+  padding: 10px;
 }
 
 .black {
@@ -389,3 +407,10 @@ div.info {
     background-color: rgba(250,250,250,.8);
     z-index: 1;
     }*/
+
+#player {
+  display: inline-block;
+  position: absolute; 
+  color: rgb(84,12,4);
+  bottom:0;
+}
