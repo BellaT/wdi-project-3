@@ -7,7 +7,7 @@ Zombie.csv = [];
 Zombie.infowindow;
 Zombie.isClosed = false;
 Zombie.loaded = false;
-Zombie.number = 5438784;
+Zombie.number = 59762;
 
 
 Zombie.setRequestHeader = function(xhr, settings) {
@@ -525,8 +525,8 @@ Zombie.getDate = function() {
 }
 
 Zombie.count = function() {
-  document.getElementById('counter').innerHTML = Zombie.number;
-  Zombie.number++; 
+  document.getElementById('counter').innerHTML = this.number;
+  this.number += parseInt(this.number/1337);
 }
 
 Zombie.initialize = function() {
