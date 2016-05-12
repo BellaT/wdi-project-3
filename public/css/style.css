@@ -6,6 +6,15 @@ body, html {
   margin: 0;
 }
 
+marquee {
+  position: absolute;
+  bottom: 0;
+  opacity: 0.8;
+  display: none;
+  height: 2em;
+  line-height: 2.5em;
+}
+
 body {
   position: relative;
   overflow-x: hidden;
