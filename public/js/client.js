@@ -383,6 +383,7 @@ Zombie.getVideos = function() {
 
 Zombie.loadHome = function() {
   this.getTemplate("home", null);
+  this.setupStaticTv();
 }
 
 Zombie.handleFile = function(file) {
@@ -458,13 +459,56 @@ Zombie.setupAudio = function() {
   $player.on('click', Zombie.toggleSound);
 }
 
+Zombie.setupStaticTv = function() {
+  var canvas = document.getElementById('canvas'),
+  ctx = canvas.getContext('2d');
+
+  // closer to analouge appearance
+  canvas.width = canvas.height = 256;
+
+  function resize() {
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  resize();
+  window.onresize = resize;
+
+  function noise(ctx) {
+
+    var w = ctx.canvas.width,
+    h = ctx.canvas.height,
+    idata = ctx.createImageData(w, h),
+    buffer32 = new Uint32Array(idata.data.buffer),
+    len = buffer32.length,
+    i = 0;
+
+    for(; i < len;i++)
+      if (Math.random() < 0.5) buffer32[i] = 0xff000000;
+
+    ctx.putImageData(idata, 0, 0);
+  }
+
+  var toggle = true;
+
+  // added toggle to get 30 FPS instead of 60 FPS
+  (function loop() {
+    toggle = !toggle;
+    if (toggle) {
+      requestAnimationFrame(loop);
+      return;
+    }
+    noise(ctx);
+    requestAnimationFrame(loop);
+  })();
+}
+
 Zombie.initialize = function() {
   this.loadHome();
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-  Zombie.setupModal();
+  // this.setupModal();
 }
 
 $(function(){
