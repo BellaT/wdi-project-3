@@ -528,7 +528,7 @@ Zombie.initialize = function() {
 var number=5438784; 
 window.onload=function(){
   document.getElementById('counter').innerHTML=number;
-  setInterval('count()',80);
+  setInterval('count()',400);
   var today = new Date();
   document.getElementById('time').innerHTML=today;
 }
