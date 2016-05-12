@@ -183,6 +183,11 @@ Zombie.getTemplate = function(tpl, data) {
     $("main").html(compliedTemplate);
     if (tpl == "videos") {
       Zombie.getVideos();
+    } else if (tpl == "home") {
+      Zombie.setupModal();
+      Zombie.setupGoogleMaps();
+      Zombie.autocomplete();
+      Zombie.requestFakeMarkers();
     }
   });
 }
@@ -194,8 +199,8 @@ Zombie.changePage = function() {
 }
 
 Zombie.setupNavigation = function() {
-  // $("header nav a").on("click", this.changePage);
   $("#videos").on('click', this.changePage);
+  $("#home").on('click', this.changePage);
 }
 
 Zombie.setupForm = function() {
@@ -464,14 +469,15 @@ Zombie.getVideos = function() {
   });
 }
 
+Zombie.loadHome = function() {
+  this.getTemplate("home", null);
+}
+
 Zombie.initialize = function() {
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
-  this.setupModal();
-  this.setupGoogleMaps();
-  this.autocomplete();
-  this.requestFakeMarkers();
+  this.loadHome();
 }
 
 $(function(){
