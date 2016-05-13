@@ -9,6 +9,13 @@ Zombie.isClosed = false;
 Zombie.loaded = false;
 Zombie.number = 59762;
 
+Zombie.getUrl = function(){
+  if (window.location.href.indexOf("localhost") != -1) {
+    Zombie.url = "http://localhost:3000";
+  } else {
+    Zombie.url = "https://znn.herokuapp.com";
+  }
+}
 
 Zombie.setRequestHeader = function(xhr, settings) {
   var token = Zombie.getToken();
@@ -31,7 +38,7 @@ Zombie.saveTokenIfPresent = function(data) {
 Zombie.ajaxRequest = function(method, url, data) {
   return $.ajax({
     method: method,
-    url: "http://localhost:3000/api" + url,
+    url: Zombie.url + "/api" + url,
     data: data,
     beforeSend: this.setRequestHeader
   }).done(function(data) {
@@ -83,7 +90,7 @@ Zombie.setupGoogleMaps = function(){
 }
 
 Zombie.getTemplate = function(tpl, data) {
-  var templateUrl = "http://localhost:3000/templates/" + tpl + ".html";
+  var templateUrl = Zombie.url + "/templates/" + tpl + ".html";
   $.ajax({
     url: templateUrl,
     method: "GET",
@@ -133,7 +140,7 @@ Zombie.getLocation = function() {
   var location = $("#pac-input").val();
   
   return $.ajax({
-    url:"http://maps.googleapis.com/maps/api/geocode/json?address="+location+"&sensor=false",
+    url:"https://maps.googleapis.com/maps/api/geocode/json?address="+location+"&sensor=false",
     type: "POST",
     success:function(res){
       var LatLng = { 
@@ -322,7 +329,7 @@ Zombie.loopThroughFakeMarkers = function(markers) {
 
 Zombie.requestFakeMarkers = function() {
   $.ajax({
-    url: "http://localhost:3000/api/markers",
+    url: Zombie.url + "/api/markers",
     method: "GET"
   }).done(function(data){
     Zombie.loopThroughFakeMarkers(data);
@@ -530,12 +537,12 @@ Zombie.count = function() {
 }
 
 Zombie.initialize = function() {
+  this.getUrl();
   this.loadHome();
   this.setupSidebar();
   this.setupNavigation();
   this.setupForm();
   this.setupAudio();
-
   setInterval('Zombie.count()', 200);
 }
 
