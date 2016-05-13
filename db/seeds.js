@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
+var config   = require("../config/config")
 
-var databaseURL = 'mongodb://localhost:27017/zombie';
-mongoose.connect(databaseURL);
+mongoose.connect(config.database);
 
 var Marker = require("../models/marker"); 
 var User    = require("../models/user");
@@ -172,6 +172,3 @@ india.save(function(err, marker) {
  if (err) return console.log(err);
  console.log("Marker saved! ", marker);
 })
-
-
- 
