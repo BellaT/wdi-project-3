@@ -63,6 +63,7 @@ strong {
 #canvas {
   position:fixed;
   background:#777;
+  z-index: 1000;
 }
 
 .nav .open > a, 
