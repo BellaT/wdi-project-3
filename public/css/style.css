@@ -510,6 +510,7 @@ div.info {
 
 .infected {
   color: rgb(84,12,4);
+  text-shadow: 1px 1px black;
   margin-left: 10px;
   margin-top: 20px;
   z-index: 3;

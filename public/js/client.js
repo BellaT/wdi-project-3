@@ -203,17 +203,40 @@ Zombie.createMarkers = function(places) {
 }
 
 Zombie.addInfoWindow = function(marker, contentString) {
-  var infoWindow = new google.maps.InfoWindow({
-    content: contentString,
-    pixelOffset: new google.maps.Size(-24, 8)
-  });
+  marker.addListener("click", function(){
+    if (typeof Zombie.infowindow !== "undefined") Zombie.infowindow.close();
 
-  marker.addListener("mouseover", function(){
-    infoWindow.open(Zombie.map, this);
-  });
+    Zombie.infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      pixelOffset: new google.maps.Size(-24, 8),
+      backgroundColor: 'black'
+    });
 
-  marker.addListener("mouseout", function(){
-    infoWindow.close();
+    Zombie.infowindow.open(Zombie.map, this);
+    console.log("CLICKED")
+
+    google.maps.event.addListener(Zombie.infowindow, 'domready', function() { 
+      $(".gm-style-iw").hide();
+      var $iwOuter = $(".gm-style-iw");
+      var $x       = $iwOuter.next("div");
+      var $bg      = $iwOuter.prev().find("*");
+      var $p       = $iwOuter.find("p");
+
+      $x.css({
+        'border': '7px solid #790000',
+        'border-radius': '100%' 
+      });
+
+      $bg.css({
+        "background-color": "rgba(0,0,0,1)",
+        "border-radius": "10px"
+      });
+
+      $p.css({
+        "color": "white"
+      });
+      $(".gm-style-iw").fadeIn();
+    });
   });
 }
 
@@ -289,8 +312,7 @@ Zombie.createFakeMarkers = function(image, lat, lng, timeout){
       Zombie.infowindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 400,
-        maxHeight: 400, 
-        backgroundColor: 'black'
+        maxHeight: 400
       });
 
       Zombie.infowindow.open(Zombie.map, marker);
