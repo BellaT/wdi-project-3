@@ -58,13 +58,13 @@ Zombie.getUsers = function() {
 }
 
 Zombie.iconTypes = [
-"airport",
-"campground",
-"hospital",
-"hardware_store",
-"pharmacy",
-"doctor",
-"police"
+  "airport",
+  "campground",
+  "hospital",
+  "hardware_store",
+  "pharmacy",
+  "doctor",
+  "police"
 ]
 
 Zombie.setupGoogleMaps = function(){
@@ -100,7 +100,6 @@ Zombie.getTemplate = function(tpl, data) {
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
-      Zombie.getDate();
       if (!Zombie.loaded) {
         Zombie.setupModal();
         Zombie.loaded = true;
@@ -527,7 +526,7 @@ Zombie.getDate = function() {
 
 Zombie.count = function() {
   document.getElementById('counter').innerHTML = this.number;
-  this.number += parseInt(this.number/1337);
+  this.number += parseInt(this.number / 1337);
 }
 
 Zombie.initialize = function() {
@@ -544,5 +543,5 @@ $(function(){
   Zombie.setupStaticTv();
   window.setTimeout(function() {
     Zombie.initialize();
-  }, 500)
+  }, 2000)
 })
