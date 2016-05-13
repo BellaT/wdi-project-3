@@ -537,7 +537,7 @@ Zombie.initialize = function() {
   this.setupForm();
   this.setupAudio();
 
-  setInterval('Zombie.count()', 80);
+  setInterval('Zombie.count()', 200);
 }
 
 $(function(){
