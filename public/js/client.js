@@ -107,6 +107,7 @@ Zombie.getTemplate = function(tpl, data) {
       Zombie.autocomplete();
       Zombie.requestFakeMarkers();
       Zombie.setupHeatmap();
+      Zombie.getDate();
       if (!Zombie.loaded) {
         Zombie.setupModal();
         Zombie.loaded = true;
