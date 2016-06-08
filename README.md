@@ -8,8 +8,5 @@ HTML, CSS, Javascript, Jquery, Node, Mongoose, Express.
 
 ![Screenshot 1](http://i.imgur.com/3MqUGgs.png)
 
-
-
-###Credits
-Probably bare.
-
+### Website
+https://znn.herokuapp.com/
